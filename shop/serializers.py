@@ -93,8 +93,11 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class SingleProductSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
-    product_info = ProductInfoSerializer(read_only=True)
+    product_infos = ProductInfoSerializer(read_only=True, many=True)
+    product_parameters = ProductParameterSerializer(read_only=True, many=True)
+
 
     class Meta:
         model = Product
-        fields = ('name', 'category', 'product_info')
+        fields = ('name', 'category', 'product_infos', 'product_parameters')
+

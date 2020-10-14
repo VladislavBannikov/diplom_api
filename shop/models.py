@@ -212,9 +212,9 @@ class Contact(models.Model):
 class Order(models.Model):
     # this is the data duplication. A user accessible through the contact field.
 
-    # user = models.ForeignKey(User, verbose_name='Пользователь',
-    #                          related_name='orders', blank=True,
-    #                          on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь',
+                             related_name='orders', blank=True,
+                             on_delete=models.CASCADE)
 
     dt = models.DateTimeField(auto_now_add=True)
     state = models.CharField(verbose_name='Статус', choices=STATE_CHOICES, max_length=15)
