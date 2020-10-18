@@ -1,12 +1,16 @@
+from celery import current_app
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.db import IntegrityError
 from django.db.models import Q, Sum, F
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
 from django.shortcuts import render
 from json import loads as load_json
+
+from django.views import View
+from rest_framework import viewsets
 from yaml import load as load_yaml, Loader
 
 # Create your views here.
@@ -16,10 +20,10 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, ConfirmEmailToken, Order, \
-    OrderItem
+    OrderItem, User
 from shop.serializers import UserSerializer, ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
     OrderItemSerializer, OrderSerializer
-from shop.signals import new_user_registered, new_order
+from shop.tasks import new_order_task, new_user_registered_task
 
 
 class RegisterAccount(APIView):
@@ -54,7 +58,12 @@ class RegisterAccount(APIView):
                     user = user_serializer.save()
                     user.set_password(request.data['password'])
                     user.save()
-                    new_user_registered.send(sender=self.__class__, user_id=user.id)
+                    print('task')
+                    task = new_user_registered_task.delay(user.id)
+                    print(f"id={task.id}, state={task.state}, status={task.status}")
+
+                    # print('signal')
+                    # new_user_registered.send(sender=self.__class__, user_id=user.id)
                     return JsonResponse({'Status': True})
                 else:
                     return JsonResponse({'Status': False, 'Errors': user_serializer.errors})
@@ -126,6 +135,12 @@ class AccountDetails(APIView):
             return JsonResponse({'Status': True})
         else:
             return JsonResponse({'Status': False, 'Errors': user_serializer.errors})
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = [IsAccountAdminOrReadOnly]
 
 
 class LoginAccount(APIView):
@@ -260,7 +275,7 @@ class BasketView(APIView):
         serializer = OrderSerializer(basket, many=True)
         return Response(serializer.data)
 
-    # редактировать корзину
+    # редактировать корзину. Добавить в корзину([{"quantity":"1", "product_info":"5"}])
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
@@ -371,15 +386,19 @@ class OrderView(APIView):
                     return JsonResponse({'Status': False, 'Errors': 'Неправильно указаны аргументы'})
                 else:
                     if is_updated:
-                        new_order.send(sender=self.__class__, user_id=request.user.id)
+                        # new_order.send(sender=self.__class__, user_id=request.user.id)
+                        new_order_task.delay(request.user.id)
+
                         return JsonResponse({'Status': True})
 
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
 
 class PartnerOrders(APIView):
     """
     Класс для получения заказов поставщиками
     """
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
@@ -395,8 +414,6 @@ class PartnerOrders(APIView):
 
         serializer = OrderSerializer(order, many=True)
         return Response(serializer.data)
-
-
 
 
 class SingleProductInfoView(APIView):
@@ -416,3 +433,15 @@ class SingleProductInfoView(APIView):
 
         else:
             return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
+
+class CeleryTaskView(APIView):
+    def get(self, request):
+        task_id = request.query_params.get('task_id')
+        task = current_app.AsyncResult(task_id)
+        response_data = {'task_status': task.status, 'task_id': task.id}
+
+        if task.status == 'SUCCESS':
+            response_data['results'] = task.get()
+
+        return JsonResponse(response_data)

@@ -1,0 +1,8 @@
+
+Before runserver:
+start "redis-server"
+start "celery -A diplom_api worker -l INFO"
+
+
+
+

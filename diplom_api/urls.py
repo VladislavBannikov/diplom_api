@@ -13,12 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from pprint import pprint
+
 from django.contrib import admin
 from django.urls import path
-
+from rest_framework import routers
 
 from shop.views import PartnerUpdate, RegisterAccount, ConfirmAccount, AccountDetails, LoginAccount, InitData, \
-    ProductInfoView, SingleProductInfoView, BasketView, OrderView, PartnerOrders
+    ProductInfoView, SingleProductInfoView, BasketView, OrderView, PartnerOrders, CeleryTaskView, AccountViewSet
+
+router = routers.SimpleRouter()
+router.register(r'account', AccountViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,6 +39,8 @@ urlpatterns = [
     path('order', OrderView.as_view(), name='order'),
     path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
 
+    path('task/', CeleryTaskView.as_view(), name='task'),
+
     # path('partner/state', PartnerState.as_view(), name='partner-state'),
     # path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
     # path('user/contact', ContactView.as_view(), name='user-contact'),
@@ -45,3 +52,5 @@ urlpatterns = [
     #
     # path('order', OrderView.as_view(), name='order'),
 ]
+urlpatterns += router.urls
+

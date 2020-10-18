@@ -19,11 +19,14 @@ ipython-genutils==0.2.0
 jedi==0.17.2
 kombu==5.0.2
 parso==0.7.1
+pexpect==4.8.0
 pickleshare==0.7.5
 prompt-toolkit==3.0.7
+ptyprocess==0.6.0
 Pygments==2.7.1
 pytz==2018.5
 PyYAML==5.3.1
+redis==3.5.3
 requests==2.24.0
 six==1.15.0
 sqlparse==0.3.1
