@@ -1,4 +1,6 @@
+from django.db.models import QuerySet, F
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from shop.models import User, Category, Shop, ProductInfo, Product, ProductParameter, OrderItem, Order, Contact
 
@@ -42,9 +44,6 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('name', 'category',)
-
-
-
 
 
 class ProductParameterSerializer(serializers.ModelSerializer):
@@ -91,13 +90,52 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class OrderSerializerViewSet(serializers.ModelSerializer):
+    ordered_items = OrderItemCreateSerializer(read_only=True, many=True)
+    contact = ContactSerializer()
+
+    # explicit definition to avoid readOnly flag
+    contact_id = serializers.IntegerField()
+
+    # TODO: how to hide contact_id from GET request but use it in PUT and POST?
+    class Meta:
+        model = Order
+        fields = ('id', 'state', 'dt', 'ordered_items', 'contact_id', 'contact', 'total_sum2')
+        read_only_fields = ('id',)
+
+        # validators = UniqueTogetherValidator
+
+    def validate_state(self, value):
+        if self.instance.state != 'basket':
+            raise serializers.ValidationError("Order already has been placed")
+        return value
+
+    def validate(self, data):
+        new_contact = Contact.objects.get(id=data['contact_id'])
+        if new_contact.user_id != self.instance.user_id:
+            raise serializers.ValidationError("Order contact should belong to the user who created the order")
+        return data
+
+    # def __new__(cls, *args, **kwargs):
+    #     if args and isinstance(args[0], QuerySet):
+    #         queryset = cls._build_queryset(args[0])
+
+    #         args = (queryset,) + args[1:]
+    #     return super().__new__(cls, *args, **kwargs)
+    #
+    # @classmethod
+    # def _build_queryset(cls, queryset):
+    #     return queryset.annotate(
+    #         total_sum=
+    #         # sum(F('ordered_items__quantity') * F('ordered_items__product_info__price'))
+    #     )
+
+
 class SingleProductSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
     product_infos = ProductInfoSerializer(read_only=True, many=True)
     product_parameters = ProductParameterSerializer(read_only=True, many=True)
 
-
     class Meta:
         model = Product
         fields = ('name', 'category', 'product_infos', 'product_parameters')
-

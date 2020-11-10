@@ -15,15 +15,17 @@ Including another URLconf
 """
 from pprint import pprint
 
+from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
 
 from shop.views import PartnerUpdate, RegisterAccount, ConfirmAccount, AccountDetails, LoginAccount, InitData, \
-    ProductInfoView, SingleProductInfoView, BasketView, OrderView, PartnerOrders, CeleryTaskView, AccountViewSet
+    ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, AccountViewSet, OrderViewSet
 
 router = routers.SimpleRouter()
 router.register(r'account', AccountViewSet)
+router.register(r'order', OrderViewSet, basename="order", )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,10 +38,12 @@ urlpatterns = [
     path('products', ProductInfoView.as_view(), name='shops'),
     path('singleproduct', SingleProductInfoView.as_view(), name='prod'),
     path('basket', BasketView.as_view(), name='basket'),
-    path('order', OrderView.as_view(), name='order'),
+    # path('order', OrderView.as_view(), name='order'),
     path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
 
     path('task/', CeleryTaskView.as_view(), name='task'),
+    # url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # path('partner/state', PartnerState.as_view(), name='partner-state'),
     # path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
@@ -53,4 +57,5 @@ urlpatterns = [
     # path('order', OrderView.as_view(), name='order'),
 ]
 urlpatterns += router.urls
+# pprint(urlpatterns)
 

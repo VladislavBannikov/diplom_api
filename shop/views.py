@@ -1,3 +1,5 @@
+from copy import copy
+
 from celery import current_app
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
@@ -9,8 +11,12 @@ from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
 from django.shortcuts import render
 from json import loads as load_json
 
+from rest_framework.decorators import action
+
+from .permissions import OrderPermission
+
 from django.views import View
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, authentication
 from yaml import load as load_yaml, Loader
 
 # Create your views here.
@@ -22,7 +28,7 @@ from rest_framework.authtoken.models import Token
 from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, ConfirmEmailToken, Order, \
     OrderItem, User
 from shop.serializers import UserSerializer, ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
-    OrderItemSerializer, OrderSerializer
+    OrderItemSerializer, OrderSerializer, OrderSerializerViewSet
 from shop.tasks import new_order_task, new_user_registered_task
 
 
@@ -30,6 +36,7 @@ class RegisterAccount(APIView):
     """
     Для регистрации покупателей
     """
+    permission_classes = [permissions.AllowAny]
 
     # Регистрация методом POST
     def post(self, request, *args, **kwargs):
@@ -50,7 +57,7 @@ class RegisterAccount(APIView):
                 return JsonResponse({'Status': False, 'Errors': {'password': error_array}})
             else:
                 # проверяем данные для уникальности имени пользователя
-                request.data._mutable = True
+                #request.data._mutable = True
                 request.data.update({})
                 user_serializer = UserSerializer(data=request.data)
                 if user_serializer.is_valid():
@@ -58,9 +65,11 @@ class RegisterAccount(APIView):
                     user = user_serializer.save()
                     user.set_password(request.data['password'])
                     user.save()
-                    print('task')
-                    task = new_user_registered_task.delay(user.id)
-                    print(f"id={task.id}, state={task.state}, status={task.status}")
+
+                    ###calary task
+                    # print('task')
+                    # task = new_user_registered_task.delay(user.id)
+                    # print(f"id={task.id}, state={task.state}, status={task.status}")
 
                     # print('signal')
                     # new_user_registered.send(sender=self.__class__, user_id=user.id)
@@ -351,46 +360,34 @@ class BasketView(APIView):
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
 
-class OrderView(APIView):
-    """
-    Класс для получения и размешения заказов пользователями
-    """
+class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, viewsets.mixins.ListModelMixin):
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
-    # получить мои заказы
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-        order = Order.objects.filter(
-            user_id=request.user.id).exclude(state='basket').prefetch_related(
-            'ordered_items__product_info__product__category',
-            'ordered_items__product_info__product_parameters__parameter').select_related('contact').annotate(
-            total_sum=Sum(F('ordered_items__quantity') * F('ordered_items__product_info__price'))).distinct()
+    serializer_class = OrderSerializerViewSet
+    permission_classes = [OrderPermission]
 
-        serializer = OrderSerializer(order, many=True)
+    # GET. получить мои заказы
+    # TODO: how to use standard viewsets.mixins.ListModelMixin, but pass queryset with additional filter?
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().exclude(state='basket')
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    # разместить заказ из корзины (id = id заказа, contact = id контакта)
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
+    # PUT. разместить заказ из корзины (id = id заказа(in url) contact_id = id контакта)
 
-        if {'id', 'contact'}.issubset(request.data):
-            if request.data['id'].isdigit():
-                try:
-                    is_updated = Order.objects.filter(
-                        user_id=request.user.id, id=request.data['id']).update(
-                        contact_id=request.data['contact'],
-                        state='new')
-                except IntegrityError as error:
-                    print(error)
-                    return JsonResponse({'Status': False, 'Errors': 'Неправильно указаны аргументы'})
-                else:
-                    if is_updated:
-                        # new_order.send(sender=self.__class__, user_id=request.user.id)
-                        new_order_task.delay(request.user.id)
-
-                        return JsonResponse({'Status': True})
-
+    def partial_update(self, request, *args, **kwargs):
+        request.data.update({"state": "new"})
+        if {'contact_id'}.issubset(request.data):
+            response = viewsets.mixins.UpdateModelMixin.partial_update(self, request, *args, **kwargs)
+            ### calary task
+            # new_order_task.delay(request.user.id)
+            return response
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
 

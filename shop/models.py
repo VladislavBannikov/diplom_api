@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from django.db.models import Sum, F
 from django.utils.translation import gettext_lazy as _
 from django_rest_passwordreset.tokens import get_token_generator
 
@@ -230,9 +231,13 @@ class Order(models.Model):
     def __str__(self):
         return str(self.dt)
 
-    # @property
-    # def sum(self):
-    #     return self.ordered_items.aggregate(total=Sum("quantity"))["total"]
+    @property
+    def total_quantity(self):
+        return self.ordered_items.aggregate(total=Sum("quantity"))["total"]
+
+    @property
+    def total_sum2(self):
+        return self.ordered_items.aggregate(total=Sum(F('product_info__quantity')*F('product_info__price')))['total']
 
 
 class OrderItem(models.Model):
