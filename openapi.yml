@@ -1,0 +1,411 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /account/:
+    get:
+      operationId: listUsers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - account
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - account
+  /account/{id}/:
+    get:
+      operationId: retrieveUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - account
+    put:
+      operationId: updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - account
+    patch:
+      operationId: partialUpdateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - account
+    delete:
+      operationId: destroyUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - account
+  /order/:
+    get:
+      operationId: listOrderSerializerViewSets
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderViewSet'
+          description: ''
+      tags:
+      - order
+  /order/{id}/:
+    put:
+      operationId: updateOrderSerializerViewSet
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderViewSet'
+          description: ''
+      tags:
+      - order
+    patch:
+      operationId: partialUpdateOrderSerializerViewSet
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderViewSet'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderViewSet'
+          description: ''
+      tags:
+      - order
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        company:
+          type: string
+          maxLength: 40
+        position:
+          type: string
+          maxLength: 40
+        contacts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              city:
+                type: string
+                maxLength: 50
+              street:
+                type: string
+                maxLength: 100
+              house:
+                type: string
+                maxLength: 15
+              structure:
+                type: string
+                maxLength: 15
+              building:
+                type: string
+                maxLength: 15
+              apartment:
+                type: string
+                maxLength: 15
+              user:
+                type: integer
+                writeOnly: true
+              phone:
+                type: string
+                maxLength: 20
+            required:
+            - city
+            - street
+            - phone
+          readOnly: true
+      required:
+      - email
+    OrderViewSet:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        state:
+          enum:
+          - basket
+          - new
+          - confirmed
+          - assembled
+          - sent
+          - delivered
+          - canceled
+          type: string
+        dt:
+          type: string
+          format: date-time
+          readOnly: true
+        ordered_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              product_info:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  model:
+                    type: string
+                    maxLength: 80
+                  product:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        maxLength: 80
+                      category:
+                        type: string
+                        readOnly: true
+                    required:
+                    - name
+                    readOnly: true
+                  shop:
+                    type: integer
+                  quantity:
+                    type: integer
+                  price:
+                    type: integer
+                  price_rrc:
+                    type: integer
+                  product_parameters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        parameter:
+                          type: string
+                          readOnly: true
+                        value:
+                          type: string
+                          maxLength: 100
+                      required:
+                      - value
+                    readOnly: true
+                required:
+                - quantity
+                - price
+                - price_rrc
+                readOnly: true
+              quantity:
+                type: integer
+              order:
+                type: integer
+                writeOnly: true
+            required:
+            - quantity
+          readOnly: true
+        contact_id:
+          type: integer
+        contact:
+          type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            city:
+              type: string
+              maxLength: 50
+            street:
+              type: string
+              maxLength: 100
+            house:
+              type: string
+              maxLength: 15
+            structure:
+              type: string
+              maxLength: 15
+            building:
+              type: string
+              maxLength: 15
+            apartment:
+              type: string
+              maxLength: 15
+            user:
+              type: integer
+              writeOnly: true
+            phone:
+              type: string
+              maxLength: 20
+          required:
+          - city
+          - street
+          - phone
+        total_sum2:
+          type: string
+          readOnly: true
+      required:
+      - state
+      - contact_id
+      - contact

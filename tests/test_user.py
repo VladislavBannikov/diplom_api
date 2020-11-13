@@ -49,3 +49,4 @@ class TestLogin(APITestCase):
         print(client.login(user="Senya@mail.com", password='123456Qw!'))
 
 
+

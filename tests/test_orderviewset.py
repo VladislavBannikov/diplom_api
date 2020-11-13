@@ -7,7 +7,7 @@ from rest_framework.test import APITestCase, URLPatternsTestCase
 from shop.models import User
 
 
-
+@unittest.skip
 class TestOrderViewSet(APITestCase):
     def test_order_listing(self):
         url = reverse('order-list')

@@ -361,6 +361,9 @@ class BasketView(APIView):
 
 
 class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, viewsets.mixins.ListModelMixin):
+    # schema = Auto
+    # queryset = Order.objects.all()
+
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
 
@@ -380,7 +383,6 @@ class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, vi
         return Response(serializer.data)
 
     # PUT. разместить заказ из корзины (id = id заказа(in url) contact_id = id контакта)
-
     def partial_update(self, request, *args, **kwargs):
         request.data.update({"state": "new"})
         if {'contact_id'}.issubset(request.data):

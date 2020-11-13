@@ -1,0 +1,1185 @@
+Tracking file by folder pattern:  migrations
+openapi: 3.0.2
+info:
+  title: test_api
+  version: ''
+paths:
+  http://localhost/user/details:
+    get:
+      operationId: listAccountDetails
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0434\u0430\u043D\u043D\u044B\u043C\u0438 \u043F\
+        \u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+    post:
+      operationId: CreateAccountDetails
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0434\u0430\u043D\u043D\u044B\u043C\u0438 \u043F\
+        \u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  http://localhost/initdata:
+    get:
+      operationId: listInitDatas
+      description: simulate data upload from shop source
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  http://localhost/products:
+    get:
+      operationId: listProductInfos
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u043F\u043E\
+        \u0438\u0441\u043A\u0430 \u0442\u043E\u0432\u0430\u0440\u043E\u0432"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  http://localhost/singleproduct:
+    get:
+      operationId: listSingleProductInfos
+      description: "\"\n\u041A\u0430\u0440\u0442\u043E\u0447\u043A\u0430 \u0442\u043E\
+        \u0432\u0430\u0440\u0430\nget product info by product_id"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  http://localhost/basket:
+    get:
+      operationId: listBaskets
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0441 \u043A\u043E\u0440\u0437\u0438\u043D\u043E\
+        \u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+    post:
+      operationId: CreateBasket
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0441 \u043A\u043E\u0440\u0437\u0438\u043D\u043E\
+        \u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    put:
+      operationId: UpdateBasket
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0441 \u043A\u043E\u0440\u0437\u0438\u043D\u043E\
+        \u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    delete:
+      operationId: DestroyBasket
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0440\u0430\
+        \u0431\u043E\u0442\u044B \u0441 \u043A\u043E\u0440\u0437\u0438\u043D\u043E\
+        \u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  http://localhost/partner/orders:
+    get:
+      operationId: listPartnerOrders
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u043F\u043E\
+        \u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0437\u0430\u043A\u0430\u0437\u043E\
+        \u0432 \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430\u043C\u0438"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  http://localhost/task/:
+    get:
+      operationId: listCeleryTasks
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  http://localhost/account/:
+    get:
+      operationId: listUsers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    first_name:
+                      type: string
+                      maxLength: 30
+                    last_name:
+                      type: string
+                      maxLength: 150
+                    email:
+                      type: string
+                      format: email
+                      maxLength: 254
+                    company:
+                      type: string
+                      maxLength: 40
+                    position:
+                      type: string
+                      maxLength: 40
+                    contacts:
+                      type: array
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          city:
+                            type: string
+                            maxLength: 50
+                          street:
+                            type: string
+                            maxLength: 100
+                          house:
+                            type: string
+                            maxLength: 15
+                          structure:
+                            type: string
+                            maxLength: 15
+                          building:
+                            type: string
+                            maxLength: 15
+                          apartment:
+                            type: string
+                            maxLength: 15
+                          user:
+                            type: integer
+                            writeOnly: true
+                          phone:
+                            type: string
+                            maxLength: 20
+                        required:
+                        - city
+                        - street
+                        - phone
+                      readOnly: true
+                  required:
+                  - email
+          description: ''
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                company:
+                  type: string
+                  maxLength: 40
+                position:
+                  type: string
+                  maxLength: 40
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  company:
+                    type: string
+                    maxLength: 40
+                  position:
+                    type: string
+                    maxLength: 40
+                  contacts:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        city:
+                          type: string
+                          maxLength: 50
+                        street:
+                          type: string
+                          maxLength: 100
+                        house:
+                          type: string
+                          maxLength: 15
+                        structure:
+                          type: string
+                          maxLength: 15
+                        building:
+                          type: string
+                          maxLength: 15
+                        apartment:
+                          type: string
+                          maxLength: 15
+                        user:
+                          type: integer
+                          writeOnly: true
+                        phone:
+                          type: string
+                          maxLength: 20
+                      required:
+                      - city
+                      - street
+                      - phone
+                    readOnly: true
+                required:
+                - email
+          description: ''
+  http://localhost/account/{id}/:
+    get:
+      operationId: retrieveUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  company:
+                    type: string
+                    maxLength: 40
+                  position:
+                    type: string
+                    maxLength: 40
+                  contacts:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        city:
+                          type: string
+                          maxLength: 50
+                        street:
+                          type: string
+                          maxLength: 100
+                        house:
+                          type: string
+                          maxLength: 15
+                        structure:
+                          type: string
+                          maxLength: 15
+                        building:
+                          type: string
+                          maxLength: 15
+                        apartment:
+                          type: string
+                          maxLength: 15
+                        user:
+                          type: integer
+                          writeOnly: true
+                        phone:
+                          type: string
+                          maxLength: 20
+                      required:
+                      - city
+                      - street
+                      - phone
+                    readOnly: true
+                required:
+                - email
+          description: ''
+    put:
+      operationId: updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                company:
+                  type: string
+                  maxLength: 40
+                position:
+                  type: string
+                  maxLength: 40
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  company:
+                    type: string
+                    maxLength: 40
+                  position:
+                    type: string
+                    maxLength: 40
+                  contacts:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        city:
+                          type: string
+                          maxLength: 50
+                        street:
+                          type: string
+                          maxLength: 100
+                        house:
+                          type: string
+                          maxLength: 15
+                        structure:
+                          type: string
+                          maxLength: 15
+                        building:
+                          type: string
+                          maxLength: 15
+                        apartment:
+                          type: string
+                          maxLength: 15
+                        user:
+                          type: integer
+                          writeOnly: true
+                        phone:
+                          type: string
+                          maxLength: 20
+                      required:
+                      - city
+                      - street
+                      - phone
+                    readOnly: true
+                required:
+                - email
+          description: ''
+    patch:
+      operationId: partial_updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                company:
+                  type: string
+                  maxLength: 40
+                position:
+                  type: string
+                  maxLength: 40
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  company:
+                    type: string
+                    maxLength: 40
+                  position:
+                    type: string
+                    maxLength: 40
+                  contacts:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        city:
+                          type: string
+                          maxLength: 50
+                        street:
+                          type: string
+                          maxLength: 100
+                        house:
+                          type: string
+                          maxLength: 15
+                        structure:
+                          type: string
+                          maxLength: 15
+                        building:
+                          type: string
+                          maxLength: 15
+                        apartment:
+                          type: string
+                          maxLength: 15
+                        user:
+                          type: integer
+                          writeOnly: true
+                        phone:
+                          type: string
+                          maxLength: 20
+                      required:
+                      - city
+                      - street
+                      - phone
+                    readOnly: true
+                required:
+                - email
+          description: ''
+    delete:
+      operationId: destroyUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u041F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  http://localhost/order/:
+    get:
+      operationId: listOrderSerializerViewSets
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    state:
+                      enum:
+                      - basket
+                      - new
+                      - confirmed
+                      - assembled
+                      - sent
+                      - delivered
+                      - canceled
+                    dt:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    ordered_items:
+                      type: array
+                      items:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          product_info:
+                            properties:
+                              id:
+                                type: integer
+                                readOnly: true
+                              model:
+                                type: string
+                                maxLength: 80
+                              product:
+                                properties:
+                                  name:
+                                    type: string
+                                    maxLength: 80
+                                  category:
+                                    type: string
+                                    readOnly: true
+                                required:
+                                - name
+                                type: object
+                                readOnly: true
+                              shop:
+                                type: integer
+                              quantity:
+                                type: integer
+                              price:
+                                type: integer
+                              price_rrc:
+                                type: integer
+                              product_parameters:
+                                type: array
+                                items:
+                                  properties:
+                                    parameter:
+                                      type: string
+                                      readOnly: true
+                                    value:
+                                      type: string
+                                      maxLength: 100
+                                  required:
+                                  - value
+                                readOnly: true
+                            required:
+                            - quantity
+                            - price
+                            - price_rrc
+                            type: object
+                            readOnly: true
+                          quantity:
+                            type: integer
+                          order:
+                            type: integer
+                            writeOnly: true
+                        required:
+                        - quantity
+                      readOnly: true
+                    contact_id:
+                      type: integer
+                    contact:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        city:
+                          type: string
+                          maxLength: 50
+                        street:
+                          type: string
+                          maxLength: 100
+                        house:
+                          type: string
+                          maxLength: 15
+                        structure:
+                          type: string
+                          maxLength: 15
+                        building:
+                          type: string
+                          maxLength: 15
+                        apartment:
+                          type: string
+                          maxLength: 15
+                        user:
+                          type: integer
+                          writeOnly: true
+                        phone:
+                          type: string
+                          maxLength: 20
+                      required:
+                      - city
+                      - street
+                      - phone
+                      type: object
+                    total_sum2:
+                      type: string
+                      readOnly: true
+                  required:
+                  - state
+                  - contact_id
+                  - contact
+          description: ''
+  http://localhost/user/register:
+    post:
+      operationId: CreateRegisterAccount
+      description: "\u0414\u043B\u044F \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\
+        \u0446\u0438\u0438 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0435\
+        \u0439"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  http://localhost/user/register/confirm:
+    post:
+      operationId: CreateConfirmAccount
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u043F\u043E\
+        \u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u043F\u043E\
+        \u0447\u0442\u043E\u0432\u043E\u0433\u043E \u0430\u0434\u0440\u0435\u0441\u0430"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  http://localhost/user/login:
+    post:
+      operationId: CreateLoginAccount
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u0430\u0432\
+        \u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438 \u043F\u043E\u043B\u044C\
+        \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0435\u0439"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  http://localhost/partner/update:
+    post:
+      operationId: CreatePartnerUpdate
+      description: "\u041A\u043B\u0430\u0441\u0441 \u0434\u043B\u044F \u043E\u0431\
+        \u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0440\u0430\u0439\u0441\
+        \u0430 \u043E\u0442 \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\
+        \u0430"
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  http://localhost/order/{id}/:
+    put:
+      operationId: updateOrderSerializerViewSet
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                state:
+                  enum:
+                  - basket
+                  - new
+                  - confirmed
+                  - assembled
+                  - sent
+                  - delivered
+                  - canceled
+                contact_id:
+                  type: integer
+                contact:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    city:
+                      type: string
+                      maxLength: 50
+                    street:
+                      type: string
+                      maxLength: 100
+                    house:
+                      type: string
+                      maxLength: 15
+                    structure:
+                      type: string
+                      maxLength: 15
+                    building:
+                      type: string
+                      maxLength: 15
+                    apartment:
+                      type: string
+                      maxLength: 15
+                    user:
+                      type: integer
+                      writeOnly: true
+                    phone:
+                      type: string
+                      maxLength: 20
+                  required:
+                  - city
+                  - street
+                  - phone
+                  type: object
+              required:
+              - state
+              - contact_id
+              - contact
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  state:
+                    enum:
+                    - basket
+                    - new
+                    - confirmed
+                    - assembled
+                    - sent
+                    - delivered
+                    - canceled
+                  dt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  ordered_items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        product_info:
+                          properties:
+                            id:
+                              type: integer
+                              readOnly: true
+                            model:
+                              type: string
+                              maxLength: 80
+                            product:
+                              properties:
+                                name:
+                                  type: string
+                                  maxLength: 80
+                                category:
+                                  type: string
+                                  readOnly: true
+                              required:
+                              - name
+                              type: object
+                              readOnly: true
+                            shop:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: integer
+                            price_rrc:
+                              type: integer
+                            product_parameters:
+                              type: array
+                              items:
+                                properties:
+                                  parameter:
+                                    type: string
+                                    readOnly: true
+                                  value:
+                                    type: string
+                                    maxLength: 100
+                                required:
+                                - value
+                              readOnly: true
+                          required:
+                          - quantity
+                          - price
+                          - price_rrc
+                          type: object
+                          readOnly: true
+                        quantity:
+                          type: integer
+                        order:
+                          type: integer
+                          writeOnly: true
+                      required:
+                      - quantity
+                    readOnly: true
+                  contact_id:
+                    type: integer
+                  contact:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      city:
+                        type: string
+                        maxLength: 50
+                      street:
+                        type: string
+                        maxLength: 100
+                      house:
+                        type: string
+                        maxLength: 15
+                      structure:
+                        type: string
+                        maxLength: 15
+                      building:
+                        type: string
+                        maxLength: 15
+                      apartment:
+                        type: string
+                        maxLength: 15
+                      user:
+                        type: integer
+                        writeOnly: true
+                      phone:
+                        type: string
+                        maxLength: 20
+                    required:
+                    - city
+                    - street
+                    - phone
+                    type: object
+                  total_sum2:
+                    type: string
+                    readOnly: true
+                required:
+                - state
+                - contact_id
+                - contact
+          description: ''
+    patch:
+      operationId: partial_updateOrderSerializerViewSet
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                state:
+                  enum:
+                  - basket
+                  - new
+                  - confirmed
+                  - assembled
+                  - sent
+                  - delivered
+                  - canceled
+                contact_id:
+                  type: integer
+                contact:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    city:
+                      type: string
+                      maxLength: 50
+                    street:
+                      type: string
+                      maxLength: 100
+                    house:
+                      type: string
+                      maxLength: 15
+                    structure:
+                      type: string
+                      maxLength: 15
+                    building:
+                      type: string
+                      maxLength: 15
+                    apartment:
+                      type: string
+                      maxLength: 15
+                    user:
+                      type: integer
+                      writeOnly: true
+                    phone:
+                      type: string
+                      maxLength: 20
+                  required:
+                  - city
+                  - street
+                  - phone
+                  type: object
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  state:
+                    enum:
+                    - basket
+                    - new
+                    - confirmed
+                    - assembled
+                    - sent
+                    - delivered
+                    - canceled
+                  dt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  ordered_items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        product_info:
+                          properties:
+                            id:
+                              type: integer
+                              readOnly: true
+                            model:
+                              type: string
+                              maxLength: 80
+                            product:
+                              properties:
+                                name:
+                                  type: string
+                                  maxLength: 80
+                                category:
+                                  type: string
+                                  readOnly: true
+                              required:
+                              - name
+                              type: object
+                              readOnly: true
+                            shop:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: integer
+                            price_rrc:
+                              type: integer
+                            product_parameters:
+                              type: array
+                              items:
+                                properties:
+                                  parameter:
+                                    type: string
+                                    readOnly: true
+                                  value:
+                                    type: string
+                                    maxLength: 100
+                                required:
+                                - value
+                              readOnly: true
+                          required:
+                          - quantity
+                          - price
+                          - price_rrc
+                          type: object
+                          readOnly: true
+                        quantity:
+                          type: integer
+                        order:
+                          type: integer
+                          writeOnly: true
+                      required:
+                      - quantity
+                    readOnly: true
+                  contact_id:
+                    type: integer
+                  contact:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      city:
+                        type: string
+                        maxLength: 50
+                      street:
+                        type: string
+                        maxLength: 100
+                      house:
+                        type: string
+                        maxLength: 15
+                      structure:
+                        type: string
+                        maxLength: 15
+                      building:
+                        type: string
+                        maxLength: 15
+                      apartment:
+                        type: string
+                        maxLength: 15
+                      user:
+                        type: integer
+                        writeOnly: true
+                      phone:
+                        type: string
+                        maxLength: 20
+                    required:
+                    - city
+                    - street
+                    - phone
+                    type: object
+                  total_sum2:
+                    type: string
+                    readOnly: true
+                required:
+                - state
+                - contact_id
+                - contact
+          description: ''
