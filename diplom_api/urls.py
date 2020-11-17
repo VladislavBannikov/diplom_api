@@ -15,27 +15,26 @@ Including another URLconf
 """
 from pprint import pprint
 
+import rest_framework
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework import routers, permissions
 from rest_framework.schemas import get_schema_view
 from rest_framework.schemas.openapi import SchemaGenerator
+from rest_framework.authtoken.views import obtain_auth_token
 
 
-from shop.views import PartnerUpdate, RegisterAccount, ConfirmAccount, AccountDetails, LoginAccount, InitData, \
-    ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, AccountViewSet, OrderViewSet
+from shop.views import PartnerUpdate, InitData, \
+    ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, OrderViewSet, Account, \
+    CustomObtainAuthToken
 
 router = routers.SimpleRouter()
-router.register(r'account', AccountViewSet)
 router.register(r'order', OrderViewSet, basename="order",)
+router.register(r'account', Account)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/register', RegisterAccount.as_view(), name='user-register'),
-    path('user/register/confirm', ConfirmAccount.as_view(), name='user-register-confirm'),
-    path('user/details', AccountDetails.as_view(), name='user-details'),
-    path('user/login', LoginAccount.as_view(), name='user-login'),
     path('partner/update', PartnerUpdate.as_view(), name='partner-update'),
     path('initdata', InitData.as_view(), name='init-data'),
     path('products', ProductInfoView.as_view(), name='shops'),
@@ -43,6 +42,7 @@ urlpatterns = [
     path('basket', BasketView.as_view(), name='basket'),
     path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
     path('task/', CeleryTaskView.as_view(), name='task'),
+    path('account/get-token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
@@ -61,10 +61,12 @@ urlpatterns += router.urls
 urlpatterns += [path('openapi/', get_schema_view(
         title="DiplomAPI (shop)",
         description="API for shop",
-        version="1.0.1",
+        version="1.1.0",
+        permission_classes=(permissions.AllowAny,),
         # url='http://127.0.0.1:8000/'
+        public=True,
     ), name='openapi-schema')]
-# pprint(urlpatterns)
+pprint(urlpatterns)
 
 # generator = SchemaGenerator(title='Stock Prices API')
 # schema = generator.get_schema()

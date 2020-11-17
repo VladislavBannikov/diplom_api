@@ -1,5 +1,7 @@
 from copy import copy
+from pprint import pprint
 
+import rest_framework
 from celery import current_app
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
@@ -12,11 +14,12 @@ from django.shortcuts import render
 from json import loads as load_json
 
 from rest_framework.decorators import action
+from rest_framework.authtoken.views import ObtainAuthToken
 
 from .permissions import OrderPermission
 
 from django.views import View
-from rest_framework import viewsets, permissions, authentication
+from rest_framework import viewsets, permissions, authentication, throttling, status
 from yaml import load as load_yaml, Loader
 
 # Create your views here.
@@ -32,21 +35,41 @@ from shop.serializers import UserSerializer, ProductInfoSerializer, ProductSeria
 from shop.tasks import new_order_task, new_user_registered_task
 
 
-class RegisterAccount(APIView):
-    """
-    Для регистрации покупателей
-    """
+class Account(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
+    queryset = User.objects.all()
+
+    # def get_queryset(self):
+    #     return Order.objects.filter(user=self.request.user)
+
+    serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
-    # Регистрация методом POST
-    def post(self, request, *args, **kwargs):
+    @action(detail=False, methods=['get'], url_name='detail', permission_classes=(permissions.IsAuthenticated,))
+    def details(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
+    @action(detail=False, methods=['POST'], url_name='confirm', )
+    def confirm(self, request, *args, **kwargs):
+        # проверяем обязательные аргументы
+        if {'email', 'token'}.issubset(request.data):
+            token = ConfirmEmailToken.objects.filter(user__email=request.data['email'],
+                                                     key=request.data['token']).first()
+            if token:
+                token.user.is_active = True
+                token.user.save()
+                token.delete()
+                return JsonResponse({'Status': True})
+            else:
+                return JsonResponse({'Status': False, 'Errors': 'Неправильно указан токен или email'})
+        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
+    # TODO: how to change url_name for this action. By default - < URLPattern    '^acc/$'[name = 'user-list'] >,
+    def create(self, request, *args, **kwargs):
         # проверяем обязательные аргументы
         if {'first_name', 'last_name', 'email', 'password', 'company', 'position'}.issubset(request.data):
             errors = {}
-
             # проверяем пароль на сложность
-
             try:
                 validate_password(request.data['password'])
             except Exception as password_error:
@@ -57,72 +80,27 @@ class RegisterAccount(APIView):
                 return JsonResponse({'Status': False, 'Errors': {'password': error_array}})
             else:
                 # проверяем данные для уникальности имени пользователя
-                #request.data._mutable = True
+                # request.data._mutable = True
                 request.data.update({})
-                user_serializer = UserSerializer(data=request.data)
-                if user_serializer.is_valid():
-                    # сохраняем пользователя
-                    user = user_serializer.save()
-                    user.set_password(request.data['password'])
-                    user.save()
-
-                    ###calary task
-                    # print('task')
-                    # task = new_user_registered_task.delay(user.id)
-                    # print(f"id={task.id}, state={task.state}, status={task.status}")
-
-                    # print('signal')
-                    # new_user_registered.send(sender=self.__class__, user_id=user.id)
-                    return JsonResponse({'Status': True})
-                else:
-                    return JsonResponse({'Status': False, 'Errors': user_serializer.errors})
-
+                serializer = self.get_serializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                # perform_create
+                user = serializer.save()
+                user.set_password(request.data['password'])
+                user.save()
+                ###calary task
+                # print('task')
+                # task = new_user_registered_task.delay(user.id)
+                # print(f"id={task.id}, state={task.state}, status={task.status}")
+                # print('signal')
+                # new_user_registered.send(sender=self.__class__, user_id=user.id)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
-
-class ConfirmAccount(APIView):
-    """
-    Класс для подтверждения почтового адреса
-    """
-
-    # Регистрация методом POST
-    def post(self, request, *args, **kwargs):
-
+    @action(detail=False, methods=['POST'], url_name='edit', permission_classes=(permissions.IsAuthenticated,))
+    def edit(self, request, *args, **kwargs):
         # проверяем обязательные аргументы
-        if {'email', 'token'}.issubset(request.data):
-
-            token = ConfirmEmailToken.objects.filter(user__email=request.data['email'],
-                                                     key=request.data['token']).first()
-            if token:
-                token.user.is_active = True
-                token.user.save()
-                token.delete()
-                return JsonResponse({'Status': True})
-            else:
-                return JsonResponse({'Status': False, 'Errors': 'Неправильно указан токен или email'})
-
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-
-class AccountDetails(APIView):
-    """
-    Класс для работы данными пользователя
-    """
-
-    # получить данные
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
-        serializer = UserSerializer(request.user)
-        return Response(serializer.data)
-
-    # Редактирование методом POST
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-        # проверяем обязательные аргументы
-
         if 'password' in request.data:
             errors = {}
             # проверяем пароль на сложность
@@ -144,34 +122,6 @@ class AccountDetails(APIView):
             return JsonResponse({'Status': True})
         else:
             return JsonResponse({'Status': False, 'Errors': user_serializer.errors})
-
-
-class AccountViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    # permission_classes = [IsAccountAdminOrReadOnly]
-
-
-class LoginAccount(APIView):
-    """
-    Класс для авторизации пользователей
-    """
-
-    # Авторизация методом POST
-    def post(self, request, *args, **kwargs):
-
-        if {'email', 'password'}.issubset(request.data):
-            user = authenticate(request, username=request.data['email'], password=request.data['password'])
-
-            if user is not None:
-                if user.is_active:
-                    token, _ = Token.objects.get_or_create(user=user)
-
-                    return JsonResponse({'Status': True, 'Token': token.key})
-
-            return JsonResponse({'Status': False, 'Errors': 'Не удалось авторизовать'})
-
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
 
 class InitData(APIView):
@@ -444,3 +394,7 @@ class CeleryTaskView(APIView):
             response_data['results'] = task.get()
 
         return JsonResponse(response_data)
+
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    throttle_classes = (throttling.AnonRateThrottle,)

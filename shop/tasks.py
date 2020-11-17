@@ -31,7 +31,7 @@ def new_order_task(user_id):
 @shared_task
 def new_user_registered_task(user_id, **kwargs):
     """
-    отправляем письмо с подтрердждением почты
+    отправляем письмо с подтвердждением почты
     """
     # send an e-mail to the user
     token, _ = ConfirmEmailToken.objects.get_or_create(user_id=user_id)

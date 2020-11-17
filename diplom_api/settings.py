@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# from rest_framework.templatetags import rest_framework
+from rest_framework import authentication
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -24,7 +28,7 @@ SECRET_KEY = '$c6v53u&ai7gumn*bmteflj%6*ie0&7#xgk53+kiuoxirvzd@n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -134,12 +138,23 @@ CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Africa/Nairobi'
 
 REST_FRAMEWORK = {
-    # Используйте стандартные Django  `django.contrib.auth` разрешения,
-    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
     'DEFAULT_PERMISSION_CLASSES': [
-      'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+      #'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+      'rest_framework.permissions.IsAuthenticated'
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    #'DEFAULT_AUTHENTICATION_CLASSES': [],
-    #'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['shop.authentication.BearerTokenAuthentication',
+                                       # 'rest_framework.authentication.BasicAuthentication'
+                                       ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '1/second',
+        'user': '100/day'
+    }
 }
+
+
