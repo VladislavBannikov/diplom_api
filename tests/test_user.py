@@ -1,11 +1,7 @@
 import json
-import unittest
-from pprint import pprint
-
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 from shop.models import User
 
 user_data = {'first_name': 'Senya',
@@ -28,29 +24,30 @@ def _create_user(data):
                                     type=data.get('type'),
                                     is_active=True,
                                     )
-    print('user create===', user)
 
 
-@unittest.skip
-class TestRegisterAccount(APITestCase):
-
+class TestAccountCreateUser(APITestCase):
+    user_data_local = {'first_name': 'Senya_local',
+                 'last_name': "Ivanov",
+                 'email': "Senya_local@mail.com",
+                 'password': "123456Qw!",
+                 'company': "VTB",
+                 'position': "manager",
+                 'type': "buyer"
+                 }
     def test_create_user(self):
-        url = reverse('user-register')
-        response = self.client.post(path=url, data=user_data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(json.loads(response.content), {'Status': True})
-        self.assertEqual(User.objects.all().count(), 1)
+        url = reverse('user-list')
+        response = self.client.post(path=url, data=self.user_data_local)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class TestLogin(APITestCase):
-
+class TestAccount(APITestCase):
     @classmethod
     def setUpClass(cls):
         _create_user(data=user_data)
-        super(TestLogin, cls).setUpClass()
+        super(TestAccount, cls).setUpClass()
 
-    def test_login_account(self):
-
+    def test_account_detail(self):
         # Этот способ не работает. Возвращает True, но заголовка authorization нет в запросе (проверено
         # во вью AccountDetails(APIView) )
         # Из https://www.django-rest-framework.org/api-guide/testing/#authenticating
@@ -63,11 +60,25 @@ class TestLogin(APITestCase):
 
         # Этот способ найден здесь:
         # https://stackoverflow.com/questions/37513050/django-apiclient-login-not-working
-        self.client.force_authenticate(User.objects.first())
-        print('client.cookies==', self.client.cookies)
-        url = reverse('user-details')
-        print('client session===', self.client.session)
+        self.client.force_authenticate(User.objects.get(email='Senya@mail.com'))
+        url = reverse('user-detail')
         response = self.client.get(path=url)
-        print('response===', response)
-        # print('response.META===')
-        print(json.loads(response.content))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_token(self):
+        url = reverse('api_token_auth')
+        data = {"username": user_data.get("email"),
+                "password": user_data.get("password")
+                }
+        response = self.client.post(path=url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("token", json.loads(response.content))
+
+    def test_account_edit(self):
+        data = {"first_name": "test_name"}
+        self.client.force_authenticate(User.objects.get(email='Senya@mail.com'))
+        url = reverse('user-edit')
+        response = self.client.post(path=url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(User.objects.get(email='Senya@mail.com').first_name, data.get("first_name"))
+

@@ -14,17 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from pprint import pprint
-
-import rest_framework
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers, permissions
 from rest_framework.schemas import get_schema_view
-from rest_framework.schemas.openapi import SchemaGenerator
-from rest_framework.authtoken.views import obtain_auth_token
-
-
 from shop.views import PartnerUpdate, InitData, \
     ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, OrderViewSet, Account, \
     CustomObtainAuthToken
@@ -45,17 +39,6 @@ urlpatterns = [
     path('account/get-token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    # path('partner/state', PartnerState.as_view(), name='partner-state'),
-    # path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
-    # path('user/contact', ContactView.as_view(), name='user-contact'),
-    # path('user/password_reset', reset_password_request_token, name='password-reset'),
-    # path('user/password_reset/confirm', reset_password_confirm, name='password-reset-confirm'),
-    # path('categories', CategoryView.as_view(), name='categories'),
-    # path('shops', ShopView.as_view(), name='shops'),
-    #
-    #
-    # path('order', OrderView.as_view(), name='order'),
 ]
 urlpatterns += router.urls
 urlpatterns += [path('openapi/', get_schema_view(
@@ -63,11 +46,7 @@ urlpatterns += [path('openapi/', get_schema_view(
         description="API for shop",
         version="1.1.0",
         permission_classes=(permissions.AllowAny,),
-        # url='http://127.0.0.1:8000/'
+        # url='http://localhost:8000/',    # better not have this because Postman add {{baseUrl}} by default anyway.
         public=True,
     ), name='openapi-schema')]
 pprint(urlpatterns)
-
-# generator = SchemaGenerator(title='Stock Prices API')
-# schema = generator.get_schema()
-# print(schema)

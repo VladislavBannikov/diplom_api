@@ -37,10 +37,6 @@ from shop.tasks import new_order_task, new_user_registered_task
 
 class Account(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
     queryset = User.objects.all()
-
-    # def get_queryset(self):
-    #     return Order.objects.filter(user=self.request.user)
-
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -88,6 +84,7 @@ class Account(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
                 user = serializer.save()
                 user.set_password(request.data['password'])
                 user.save()
+                # TODO: check if it still works
                 ###calary task
                 # print('task')
                 # task = new_user_registered_task.delay(user.id)
@@ -128,6 +125,7 @@ class InitData(APIView):
     """
     simulate data upload from shop source
     """
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request, *args, **kwargs):
         with open('data/shop1.yaml', 'r', encoding='utf8') as f:
@@ -192,7 +190,6 @@ class ProductInfoView(APIView):
     """
     Класс для поиска товаров
     """
-
     def get(self, request, *args, **kwargs):
 
         query = Q(shop__state=True)
@@ -220,11 +217,8 @@ class BasketView(APIView):
     """
     Класс для работы с корзиной пользователя
     """
-
     # получить корзину
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
         basket = Order.objects.filter(
             user_id=request.user.id, state='basket').prefetch_related(
             'ordered_items__product_info__product__category',
@@ -234,11 +228,8 @@ class BasketView(APIView):
         serializer = OrderSerializer(basket, many=True)
         return Response(serializer.data)
 
-    # редактировать корзину. Добавить в корзину([{"quantity":"1", "product_info":"5"}])
+    # редактировать корзину. Добавить в корзину(items [{"quantity":33, "product_info":12}])
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
         items_sting = request.data.get('items')
         if items_sting:
             try:
@@ -260,17 +251,13 @@ class BasketView(APIView):
                             objects_created += 1
 
                     else:
-
-                        JsonResponse({'Status': False, 'Errors': serializer.errors})
+                        return JsonResponse({'Status': False, 'Errors': serializer.errors})
 
                 return JsonResponse({'Status': True, 'Создано объектов': objects_created})
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
-    # удалить товары из корзины (индексы в корзине через запятую)
+    # удалить товары из корзины (form-data: items индексы в shop_orderitem через запятую)
     def delete(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
         items_sting = request.data.get('items')
         if items_sting:
             items_list = items_sting.split(',')
@@ -287,17 +274,14 @@ class BasketView(APIView):
                 return JsonResponse({'Status': True, 'Удалено объектов': deleted_count})
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
-    # добавить позиции в корзину ({id:int, quantity:int})
+    # добавить позиции в корзину (x-www-form-urlencoded items [{"quantity":44, "id":13}])
     def put(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
         items_sting = request.data.get('items')
         if items_sting:
             try:
                 items_dict = load_json(items_sting)
             except ValueError:
-                JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
+                return JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
             else:
                 basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
                 objects_updated = 0
@@ -332,10 +316,12 @@ class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, vi
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    # PUT. разместить заказ из корзины (id = id заказа(in url) contact_id = id контакта)
+    #TODO: PUT and PATCH in schema
+    # PATCH. разместить заказ из корзины (id = id заказа(in url) json - {"contact_id":1})
+    # content-type = application/json
     def partial_update(self, request, *args, **kwargs):
-        request.data.update({"state": "new"})
         if {'contact_id'}.issubset(request.data):
+            request.data.update({"state": "new"})
             response = viewsets.mixins.UpdateModelMixin.partial_update(self, request, *args, **kwargs)
             ### calary task
             # new_order_task.delay(request.user.id)
@@ -349,9 +335,6 @@ class PartnerOrders(APIView):
     """
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
         if request.user.type != 'shop':
             return JsonResponse({'Status': False, 'Error': 'Только для магазинов'}, status=403)
 
