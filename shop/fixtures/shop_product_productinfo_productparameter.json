@@ -1,0 +1,318 @@
+[
+{
+    "model": "shop.shop",
+    "pk": 1,
+    "fields": {
+      "name": "DNS-shop",
+      "url": "dns.ru",
+      "user": null,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 2,
+    "fields": {
+      "name": "Citilink",
+      "url": "cililink.ru",
+      "user": null,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 5,
+    "fields": {
+      "name": "Связной",
+      "url": null,
+      "user": 7,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Flash-накопители",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 15,
+    "fields": {
+      "name": "Аксессуары",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 224,
+    "fields": {
+      "name": "Смартфоны",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 5,
+    "fields": {
+      "name": "Смартфон Apple iPhone XS Max 512GB (золотистый)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 6,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 256GB (красный)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 7,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 256GB (черный)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 8,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 128GB (синий)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 9,
+    "fields": {
+      "model": "apple/iphone/xs-max",
+      "external_id": 4216292,
+      "product": 5,
+      "shop": 5,
+      "quantity": 14,
+      "price": 110000,
+      "price_rrc": 116990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 10,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4216313,
+      "product": 6,
+      "shop": 5,
+      "quantity": 9,
+      "price": 65000,
+      "price_rrc": 69990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 11,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4216226,
+      "product": 7,
+      "shop": 5,
+      "quantity": 5,
+      "price": 65000,
+      "price_rrc": 69990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 12,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4672670,
+      "product": 8,
+      "shop": 5,
+      "quantity": 7,
+      "price": 60000,
+      "price_rrc": 64990
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 5,
+    "fields": {
+      "name": "Диагональ (дюйм)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 6,
+    "fields": {
+      "name": "Разрешение (пикс)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 7,
+    "fields": {
+      "name": "Встроенная память (Гб)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 8,
+    "fields": {
+      "name": "Цвет"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 33,
+    "fields": {
+      "product_info": 9,
+      "parameter": 5,
+      "value": "6.5"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 34,
+    "fields": {
+      "product_info": 9,
+      "parameter": 6,
+      "value": "2688x1242"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 35,
+    "fields": {
+      "product_info": 9,
+      "parameter": 7,
+      "value": "512"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 36,
+    "fields": {
+      "product_info": 9,
+      "parameter": 8,
+      "value": "золотистый"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 37,
+    "fields": {
+      "product_info": 10,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 38,
+    "fields": {
+      "product_info": 10,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 39,
+    "fields": {
+      "product_info": 10,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 40,
+    "fields": {
+      "product_info": 10,
+      "parameter": 8,
+      "value": "красный"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 41,
+    "fields": {
+      "product_info": 11,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 42,
+    "fields": {
+      "product_info": 11,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 43,
+    "fields": {
+      "product_info": 11,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 44,
+    "fields": {
+      "product_info": 11,
+      "parameter": 8,
+      "value": "черный"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 45,
+    "fields": {
+      "product_info": 12,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 46,
+    "fields": {
+      "product_info": 12,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 47,
+    "fields": {
+      "product_info": 12,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 48,
+    "fields": {
+      "product_info": 12,
+      "parameter": 8,
+      "value": "синий"
+    }
+  }
+]

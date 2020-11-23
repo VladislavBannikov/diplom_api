@@ -4,37 +4,17 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from shop.models import User
 
-user_data = {'first_name': 'Senya',
-             'last_name': "Ivanov",
-             'email': "Senya@mail.com",
-             'password': "123456Qw!",
-             'company': "VTB",
-             'position': "manager",
-             'type': "buyer"
-             }
-
-
-def _create_user(data):
-    user = User.objects.create_user(first_name=data.get('first_name'),
-                                    last_name=data.get('last_name'),
-                                    email=data.get('email'),
-                                    password=data.get('password'),
-                                    company=data.get('company'),
-                                    position=data.get('position'),
-                                    type=data.get('type'),
-                                    is_active=True,
-                                    )
-
 
 class TestAccountCreateUser(APITestCase):
     user_data_local = {'first_name': 'Senya_local',
-                 'last_name': "Ivanov",
-                 'email': "Senya_local@mail.com",
-                 'password': "123456Qw!",
-                 'company': "VTB",
-                 'position': "manager",
-                 'type': "buyer"
-                 }
+                       'last_name': "Ivanov",
+                       'email': "Senya_local@mail.com",
+                       'password': "123456Qw!",
+                       'company': "VTB",
+                       'position': "manager",
+                       'type': "buyer"
+                       }
+
     def test_create_user(self):
         url = reverse('user-list')
         response = self.client.post(path=url, data=self.user_data_local)
@@ -42,10 +22,7 @@ class TestAccountCreateUser(APITestCase):
 
 
 class TestAccount(APITestCase):
-    @classmethod
-    def setUpClass(cls):
-        _create_user(data=user_data)
-        super(TestAccount, cls).setUpClass()
+    fixtures = ['shop_dump.json', ]
 
     def test_account_detail(self):
         # Этот способ не работает. Возвращает True, но заголовка authorization нет в запросе (проверено
@@ -60,15 +37,15 @@ class TestAccount(APITestCase):
 
         # Этот способ найден здесь:
         # https://stackoverflow.com/questions/37513050/django-apiclient-login-not-working
-        self.client.force_authenticate(User.objects.get(email='Senya@mail.com'))
+        self.client.force_authenticate(User.objects.get(email='Dima@mail.com'))
         url = reverse('user-detail')
         response = self.client.get(path=url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_token(self):
         url = reverse('api_token_auth')
-        data = {"username": user_data.get("email"),
-                "password": user_data.get("password")
+        data = {"username": "Dima@mail.com",
+                "password": "123456Qw!"
                 }
         response = self.client.post(path=url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -76,9 +53,8 @@ class TestAccount(APITestCase):
 
     def test_account_edit(self):
         data = {"first_name": "test_name"}
-        self.client.force_authenticate(User.objects.get(email='Senya@mail.com'))
+        self.client.force_authenticate(User.objects.get(email='Dima@mail.com'))
         url = reverse('user-edit')
         response = self.client.post(path=url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(User.objects.get(email='Senya@mail.com').first_name, data.get("first_name"))
-
+        self.assertEqual(User.objects.get(email='Dima@mail.com').first_name, data.get("first_name"))

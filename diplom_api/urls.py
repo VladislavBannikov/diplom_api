@@ -20,11 +20,11 @@ from django.urls import path, include
 from rest_framework import routers, permissions
 from rest_framework.schemas import get_schema_view
 from shop.views import PartnerUpdate, InitData, \
-    ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, OrderViewSet, Account, \
-    CustomObtainAuthToken
+    ProductInfoView, SingleProductInfoView, BasketView, PartnerOrders, CeleryTaskView, Account, \
+    CustomObtainAuthToken, OrderViewSet
 
 router = routers.SimpleRouter()
-router.register(r'order', OrderViewSet, basename="order",)
+router.register(r'order', OrderViewSet)
 router.register(r'account', Account)
 
 urlpatterns = [
@@ -38,15 +38,16 @@ urlpatterns = [
     path('task/', CeleryTaskView.as_view(), name='task'),
     path('account/get-token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
 
+
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 urlpatterns += router.urls
 urlpatterns += [path('openapi/', get_schema_view(
-        title="DiplomAPI (shop)",
-        description="API for shop",
-        version="1.1.0",
-        permission_classes=(permissions.AllowAny,),
-        # url='http://localhost:8000/',    # better not have this because Postman add {{baseUrl}} by default anyway.
-        public=True,
-    ), name='openapi-schema')]
+    title="DiplomAPI (shop)",
+    description="API for shop",
+    version="1.1.0",
+    permission_classes=(permissions.AllowAny,),
+    # url='http://localhost:8000/',    # better not have this because Postman add {{baseUrl}} by default anyway.
+    public=True,
+), name='openapi-schema')]
 pprint(urlpatterns)

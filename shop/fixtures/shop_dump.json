@@ -1,0 +1,1131 @@
+[
+  {
+    "model": "shop.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$8z3XZf8jYSUq$DQPFekQnfGrN8x/LmxA5/cdlDE+CWHwJQGlWSz6ILco=",
+      "last_login": "2020-11-16T19:20:41.366Z",
+      "is_superuser": false,
+      "first_name": "nu00000000000000",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-09-24T06:26:45.617Z",
+      "email": "Dima@mail.com",
+      "company": "Sberbank",
+      "position": "head1",
+      "username": "",
+      "is_active": true,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$MnmeMx7GfPrB$XL55If97SxE6q1UAWBktpA0cadxQThil9CXDUxCYdj0=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-09-24T06:31:52.757Z",
+      "email": "DNS@mail.com",
+      "company": "DNS-Shop",
+      "position": "head",
+      "username": "",
+      "is_active": true,
+      "type": "shop",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$mK5qnj8FnodP$eKCxUgo10J99Wi8dPfeLprdzp/2oQv1pS5nPIixZ07w=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:02:52.131Z",
+      "email": "Vanya@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$fyG2f0sDMVbz$DeR10PxgD83lVZV7gRRT2KNkSepL79FF2qlgUlV2idk=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:05:28.173Z",
+      "email": "Vanya1@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": true,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 10,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$Rca4E7HcBrwP$mck9Kr+PQXpPZOkoAku/Ht+Y/eD2ynjOqNqLaT2CR8A=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:09:45.158Z",
+      "email": "Vanya2@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": true,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 11,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$QrcKB1jOj1Ij$eGTv9S4suKIBcb9gKiAva1aRHp9qstLuAfn12r3+YTw=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:11:41.395Z",
+      "email": "Vanya3@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 12,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$f7lMrhIT15Ju$rh5i7XnIH9zeHnnmVoZUoGAooSfAR8SM/0Vq0vAm5UM=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:20:38.426Z",
+      "email": "Vanya4@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 13,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$Vy4ypxcVjbe9$v1jUJkliAR97hp1F+J4otv/3rn9Fbj/3AfPCjr8wIdM=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T16:33:05.997Z",
+      "email": "Vanya5@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 14,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$KzWXidOY0EbG$m5e2+jLBg/4l2R6AOKb/QzRmk3pv5eO3skd+icgBLXY=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:02:22.729Z",
+      "email": "Vanya6@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 15,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$R5Lr8OW3lKan$qxIS+zUcGBu2O9TaoDDI6edNji1V1OCvCdJQNzurokY=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:08:05.510Z",
+      "email": "Vanya7@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 16,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$wfa4kyGfLRW0$9l2sMo9pqYfaCtvnYTJQz81y+LLPf1bIN0GmzvG/VzE=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:13:42.070Z",
+      "email": "Vanya8@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": true,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 17,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$zu2vLdXndz87$FM1AjMfRq6CiizrzFLmO/fwIxDK+BX8WOZem70qtdWo=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:19:33.270Z",
+      "email": "Vanya9@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 18,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$b2x0dFx1TBcy$A8C141Koc8XnTJU9IDvmoJtiwJc7eRvKR05O4sFE4RU=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:31:01.993Z",
+      "email": "Vanya10@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 19,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$N4ohh3Q676gv$LXCjyFGBs/Wtf9fw0GRuedurTJrscSMJFXHwYjl873U=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:32:10.836Z",
+      "email": "Vanya11@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 20,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$ERhmEIsOtBUV$Havf/bpnf26WT15Mm8DW5gIxXy6UtxdShUmRB2ZMlCI=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:39:17.410Z",
+      "email": "Vanya12@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 21,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$WmEt4LwR8BRt$6KLtnfXNUcjHCGNHXNgmP/bjcWYxAgtNzNDi84c2T1Y=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:39:52.498Z",
+      "email": "Vanya13@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 22,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$BnlA0HprvZys$RvAeK6fv0NQIe4udnueS8FT5pBeuS8H0Izaj8rMk6HM=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:42:58.643Z",
+      "email": "Vanya14@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 23,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$kxZe8An8lnju$6fu3QnRLo6vI++swCMJC7qYtPwxuob1vN9Y7qBuIX5A=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:44:01.625Z",
+      "email": "Vanya15@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 24,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$5EcmGvIzpCXl$gVD2TIVtjavF/KiQy1XGVTS7TkspMi2CSCY8da+uMgI=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:48:37.956Z",
+      "email": "Vanya16@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 25,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$D7k5OfgTmyTf$MlKB7P+T/G5PFlpdFkl/iP44m7RlUoLnl0/68BXHMAI=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:58:03.532Z",
+      "email": "Vanya17@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 26,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$sNC7AEN5ILTK$OeA3H8nrfydn7G4+Jm/a7eFI2vc6KmDGf1Qk5Cg3Ido=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Petr",
+      "last_name": "Petrov",
+      "is_staff": false,
+      "date_joined": "2020-10-17T18:59:31.037Z",
+      "email": "Vanya18@mail.com",
+      "company": "google",
+      "position": "QA stuff",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 29,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$EE07ulEctYUG$NJ85J2fvBjYcQc5AzgyX5oysKEKziub+JBHUzchs4rE=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Senya",
+      "last_name": "Ivanov",
+      "is_staff": false,
+      "date_joined": "2020-11-16T16:19:01.417Z",
+      "email": "Senya1@mail.com",
+      "company": "VTB",
+      "position": "manager",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.user",
+    "pk": 30,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$Nu3NMQmeQ72i$aJTgM0rsPSNK+xK06+y7I6RFgNZgc6ymxl62F5O1SBc=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "nu",
+      "last_name": "culp",
+      "is_staff": false,
+      "date_joined": "2020-11-17T15:11:27.665Z",
+      "email": "ona@mail.ru",
+      "company": "do",
+      "position": "ea",
+      "username": "",
+      "is_active": false,
+      "type": "buyer",
+      "groups": [
+
+      ],
+      "user_permissions": [
+
+      ]
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 1,
+    "fields": {
+      "name": "DNS-shop",
+      "url": "dns.ru",
+      "user": null,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 2,
+    "fields": {
+      "name": "Citilink",
+      "url": "cililink.ru",
+      "user": null,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.shop",
+    "pk": 5,
+    "fields": {
+      "name": "Связной",
+      "url": null,
+      "user": 7,
+      "state": true
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Flash-накопители",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 15,
+    "fields": {
+      "name": "Аксессуары",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 224,
+    "fields": {
+      "name": "Смартфоны",
+      "shops": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 5,
+    "fields": {
+      "name": "Смартфон Apple iPhone XS Max 512GB (золотистый)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 6,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 256GB (красный)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 7,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 256GB (черный)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 8,
+    "fields": {
+      "name": "Смартфон Apple iPhone XR 128GB (синий)",
+      "category": 224
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 9,
+    "fields": {
+      "model": "apple/iphone/xs-max",
+      "external_id": 4216292,
+      "product": 5,
+      "shop": 5,
+      "quantity": 14,
+      "price": 110000,
+      "price_rrc": 116990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 10,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4216313,
+      "product": 6,
+      "shop": 5,
+      "quantity": 9,
+      "price": 65000,
+      "price_rrc": 69990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 11,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4216226,
+      "product": 7,
+      "shop": 5,
+      "quantity": 5,
+      "price": 65000,
+      "price_rrc": 69990
+    }
+  },
+  {
+    "model": "shop.productinfo",
+    "pk": 12,
+    "fields": {
+      "model": "apple/iphone/xr",
+      "external_id": 4672670,
+      "product": 8,
+      "shop": 5,
+      "quantity": 7,
+      "price": 60000,
+      "price_rrc": 64990
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 5,
+    "fields": {
+      "name": "Диагональ (дюйм)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 6,
+    "fields": {
+      "name": "Разрешение (пикс)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 7,
+    "fields": {
+      "name": "Встроенная память (Гб)"
+    }
+  },
+  {
+    "model": "shop.parameter",
+    "pk": 8,
+    "fields": {
+      "name": "Цвет"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 33,
+    "fields": {
+      "product_info": 9,
+      "parameter": 5,
+      "value": "6.5"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 34,
+    "fields": {
+      "product_info": 9,
+      "parameter": 6,
+      "value": "2688x1242"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 35,
+    "fields": {
+      "product_info": 9,
+      "parameter": 7,
+      "value": "512"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 36,
+    "fields": {
+      "product_info": 9,
+      "parameter": 8,
+      "value": "золотистый"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 37,
+    "fields": {
+      "product_info": 10,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 38,
+    "fields": {
+      "product_info": 10,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 39,
+    "fields": {
+      "product_info": 10,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 40,
+    "fields": {
+      "product_info": 10,
+      "parameter": 8,
+      "value": "красный"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 41,
+    "fields": {
+      "product_info": 11,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 42,
+    "fields": {
+      "product_info": 11,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 43,
+    "fields": {
+      "product_info": 11,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 44,
+    "fields": {
+      "product_info": 11,
+      "parameter": 8,
+      "value": "черный"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 45,
+    "fields": {
+      "product_info": 12,
+      "parameter": 5,
+      "value": "6.1"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 46,
+    "fields": {
+      "product_info": 12,
+      "parameter": 6,
+      "value": "1792x828"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 47,
+    "fields": {
+      "product_info": 12,
+      "parameter": 7,
+      "value": "256"
+    }
+  },
+  {
+    "model": "shop.productparameter",
+    "pk": 48,
+    "fields": {
+      "product_info": 12,
+      "parameter": 8,
+      "value": "синий"
+    }
+  },
+  {
+    "model": "shop.contact",
+    "pk": 1,
+    "fields": {
+      "user": 6,
+      "city": "Moscow",
+      "street": "Pokrovka",
+      "house": "15",
+      "structure": "",
+      "building": "",
+      "apartment": "10",
+      "phone": "+7777111222333"
+    }
+  },
+  {
+    "model": "shop.contact",
+    "pk": 2,
+    "fields": {
+      "user": 7,
+      "city": "Moscow",
+      "street": "Red Square",
+      "house": "3",
+      "structure": "",
+      "building": "",
+      "apartment": "1",
+      "phone": "+7777111111111"
+    }
+  },
+  {
+    "model": "shop.order",
+    "pk": 1,
+    "fields": {
+      "user": 7,
+      "dt": "2020-10-14T06:02:56.935Z",
+      "state": "new",
+      "contact": 2
+    }
+  },
+  {
+    "model": "shop.order",
+    "pk": 2,
+    "fields": {
+      "user": 6,
+      "dt": "2020-10-17T19:18:12.831Z",
+      "state": "new",
+      "contact": 1
+    }
+  },
+  {
+    "model": "shop.order",
+    "pk": 3,
+    "fields": {
+      "user": 6,
+      "dt": "2020-10-27T16:23:19.635Z",
+      "state": "basket",
+      "contact": 1
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 13,
+    "fields": {
+      "order": 3,
+      "product_info": 12,
+      "quantity": 44
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 5,
+    "fields": {
+      "user": 10,
+      "created_at": "2020-10-17T16:09:45.240Z",
+      "key": "85e9ad404042ef5e8"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 6,
+    "fields": {
+      "user": 11,
+      "created_at": "2020-10-17T16:11:41.572Z",
+      "key": "4d20bee1159fd43e408cae23a232dec8eeb7"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 7,
+    "fields": {
+      "user": 9,
+      "created_at": "2020-10-17T16:20:25.298Z",
+      "key": "17d6135aa5138"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 8,
+    "fields": {
+      "user": 12,
+      "created_at": "2020-10-17T16:20:38.583Z",
+      "key": "6ba2cdd3d7a5"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 9,
+    "fields": {
+      "user": 13,
+      "created_at": "2020-10-17T16:33:06.235Z",
+      "key": "93402cdc739c593d79d0f90dded032674e94d35701429ca"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 10,
+    "fields": {
+      "user": 14,
+      "created_at": "2020-10-17T18:02:22.919Z",
+      "key": "5c04f75526a59ff8ef3c27b0da836cdb3f8a7f32de30f2a2"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 11,
+    "fields": {
+      "user": 15,
+      "created_at": "2020-10-17T18:08:05.762Z",
+      "key": "5e818aa3969a8aef5dcb36840"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 12,
+    "fields": {
+      "user": 16,
+      "created_at": "2020-10-17T18:13:42.226Z",
+      "key": "df022c4e480df69c3e03124eb29ff23e7121c411"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 13,
+    "fields": {
+      "user": 6,
+      "created_at": "2020-10-17T18:16:46.302Z",
+      "key": "14462eab0012e1615d5554bfa1df07268781ddbe"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 14,
+    "fields": {
+      "user": 17,
+      "created_at": "2020-10-17T18:19:33.371Z",
+      "key": "2ad5f453ffb4b95ac936245b8d44fd8"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 15,
+    "fields": {
+      "user": 18,
+      "created_at": "2020-10-17T18:31:02.082Z",
+      "key": "8e7b6d1526f50b12a36a97b341"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 16,
+    "fields": {
+      "user": 19,
+      "created_at": "2020-10-17T18:32:11.006Z",
+      "key": "ae6259656470"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 17,
+    "fields": {
+      "user": 20,
+      "created_at": "2020-10-17T18:39:17.577Z",
+      "key": "9134eefaefd474a38"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 18,
+    "fields": {
+      "user": 21,
+      "created_at": "2020-10-17T18:39:52.770Z",
+      "key": "9ac0b48f6e67d765b"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 19,
+    "fields": {
+      "user": 22,
+      "created_at": "2020-10-17T18:42:58.761Z",
+      "key": "ff1b231a73bbc3859b601597ec58"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 20,
+    "fields": {
+      "user": 23,
+      "created_at": "2020-10-17T18:44:01.710Z",
+      "key": "df4954f4ffc7f1e50971daebbeaaf0466b2a54bd2a4855fd4d"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 21,
+    "fields": {
+      "user": 24,
+      "created_at": "2020-10-17T18:48:38.139Z",
+      "key": "667bbda920be2c0f"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 22,
+    "fields": {
+      "user": 25,
+      "created_at": "2020-10-17T18:58:03.786Z",
+      "key": "4f90d3ac9f86a8a637fe5595fd1ed2"
+    }
+  },
+  {
+    "model": "shop.confirmemailtoken",
+    "pk": 23,
+    "fields": {
+      "user": 26,
+      "created_at": "2020-10-17T18:59:31.205Z",
+      "key": "c61604e1c3cacd046d48277d47736b35194"
+    }
+  }
+]

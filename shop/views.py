@@ -19,7 +19,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from .permissions import OrderPermission
 
 from django.views import View
-from rest_framework import viewsets, permissions, authentication, throttling, status
+from rest_framework import viewsets, permissions, authentication, throttling, status, views, generics
 from yaml import load as load_yaml, Loader
 
 # Create your views here.
@@ -31,7 +31,7 @@ from rest_framework.authtoken.models import Token
 from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, ConfirmEmailToken, Order, \
     OrderItem, User
 from shop.serializers import UserSerializer, ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
-    OrderItemSerializer, OrderSerializer, OrderSerializerViewSet
+    OrderItemSerializer, OrderSerializer, OrderSerializerViewSetWrite, OrderSerializerViewSetRead
 from shop.tasks import new_order_task, new_user_registered_task
 
 
@@ -60,7 +60,9 @@ class Account(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
                 return JsonResponse({'Status': False, 'Errors': 'Неправильно указан токен или email'})
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
-    # TODO: how to change url_name for this action. By default - < URLPattern    '^acc/$'[name = 'user-list'] >,
+    # TODO: роутер при создание URL для этого действия генерирует <URLPattern '^account/$' [name='user-list']>,
+    # что не соответствует назначению - создание пользователя. Лучше если будет name=user-create.
+    # можно ли переопределить?
     def create(self, request, *args, **kwargs):
         # проверяем обязательные аргументы
         if {'first_name', 'last_name', 'email', 'password', 'company', 'position'}.issubset(request.data):
@@ -295,26 +297,15 @@ class BasketView(APIView):
 
 
 class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, viewsets.mixins.ListModelMixin):
-    # schema = Auto
-    # queryset = Order.objects.all()
+    queryset = Order.objects.all()
 
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return OrderSerializerViewSetRead
+        elif self.action == 'partial_update':
+            return OrderSerializerViewSetWrite
 
-    serializer_class = OrderSerializerViewSet
     permission_classes = [OrderPermission]
-
-    # GET. получить мои заказы
-    # TODO: how to use standard viewsets.mixins.ListModelMixin, but pass queryset with additional filter?
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset().exclude(state='basket')
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
     #TODO: PUT and PATCH in schema
     # PATCH. разместить заказ из корзины (id = id заказа(in url) json - {"contact_id":1})
@@ -327,6 +318,12 @@ class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, vi
             # new_order_task.delay(request.user.id)
             return response
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
+    # GET. получить мои заказы
+    # Use additional filter for queryset
+    def list(self, request, *args, **kwargs):
+        self.queryset = self.get_queryset().exclude(state='basket')
+        return viewsets.mixins.ListModelMixin.list(self, request, *args, **kwargs)
 
 
 class PartnerOrders(APIView):

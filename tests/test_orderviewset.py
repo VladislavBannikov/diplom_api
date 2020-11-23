@@ -22,7 +22,6 @@ class TestOrderViewSet(APITestCase):
         print(self.client)
 
 
-
 # class AccountTests(APITestCase):
 #     def test_create_account(self):
 #         """
@@ -38,4 +37,3 @@ class TestOrderViewSet(APITestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
