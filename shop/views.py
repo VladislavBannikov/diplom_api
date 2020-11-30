@@ -16,9 +16,8 @@ from json import loads as load_json
 from rest_framework.decorators import action
 from rest_framework.authtoken.views import ObtainAuthToken
 
-from .permissions import OrderPermission
+from .permissions import OrderPermission, OnlyBuyers
 
-from django.views import View
 from rest_framework import viewsets, permissions, authentication, throttling, status, views, generics
 from yaml import load as load_yaml, Loader
 
@@ -26,101 +25,12 @@ from yaml import load as load_yaml, Loader
 from requests import get
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 
-from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, ConfirmEmailToken, Order, \
-    OrderItem, User
-from shop.serializers import UserSerializer, ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
-    OrderItemSerializer, OrderSerializer, OrderSerializerViewSetWrite, OrderSerializerViewSetRead
+from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, Order, OrderItem
+from shop.serializers import ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
+    OrderItemSerializer, OrderSerializer, OrderSerializerViewSetWrite, OrderSerializerViewSetRead, \
+    BasketSerializer, OrderItemCreateSerializer
 from shop.tasks import new_order_task, new_user_registered_task
-
-
-class Account(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
-
-    @action(detail=False, methods=['get'], url_name='detail', permission_classes=(permissions.IsAuthenticated,))
-    def details(self, request):
-        serializer = UserSerializer(request.user)
-        return Response(serializer.data)
-
-    @action(detail=False, methods=['POST'], url_name='confirm', )
-    def confirm(self, request, *args, **kwargs):
-        # проверяем обязательные аргументы
-        if {'email', 'token'}.issubset(request.data):
-            token = ConfirmEmailToken.objects.filter(user__email=request.data['email'],
-                                                     key=request.data['token']).first()
-            if token:
-                token.user.is_active = True
-                token.user.save()
-                token.delete()
-                return JsonResponse({'Status': True})
-            else:
-                return JsonResponse({'Status': False, 'Errors': 'Неправильно указан токен или email'})
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    # TODO: роутер при создание URL для этого действия генерирует <URLPattern '^account/$' [name='user-list']>,
-    # что не соответствует назначению - создание пользователя. Лучше если будет name=user-create.
-    # можно ли переопределить?
-    def create(self, request, *args, **kwargs):
-        # проверяем обязательные аргументы
-        if {'first_name', 'last_name', 'email', 'password', 'company', 'position'}.issubset(request.data):
-            errors = {}
-            # проверяем пароль на сложность
-            try:
-                validate_password(request.data['password'])
-            except Exception as password_error:
-                error_array = []
-                # noinspection PyTypeChecker
-                for item in password_error:
-                    error_array.append(item)
-                return JsonResponse({'Status': False, 'Errors': {'password': error_array}})
-            else:
-                # проверяем данные для уникальности имени пользователя
-                # request.data._mutable = True
-                request.data.update({})
-                serializer = self.get_serializer(data=request.data)
-                serializer.is_valid(raise_exception=True)
-                # perform_create
-                user = serializer.save()
-                user.set_password(request.data['password'])
-                user.save()
-                # TODO: check if it still works
-                ###calary task
-                # print('task')
-                # task = new_user_registered_task.delay(user.id)
-                # print(f"id={task.id}, state={task.state}, status={task.status}")
-                # print('signal')
-                # new_user_registered.send(sender=self.__class__, user_id=user.id)
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    @action(detail=False, methods=['POST'], url_name='edit', permission_classes=(permissions.IsAuthenticated,))
-    def edit(self, request, *args, **kwargs):
-        # проверяем обязательные аргументы
-        if 'password' in request.data:
-            errors = {}
-            # проверяем пароль на сложность
-            try:
-                validate_password(request.data['password'])
-            except Exception as password_error:
-                error_array = []
-                # noinspection PyTypeChecker
-                for item in password_error:
-                    error_array.append(item)
-                return JsonResponse({'Status': False, 'Errors': {'password': error_array}})
-            else:
-                request.user.set_password(request.data['password'])
-
-        # проверяем остальные данные
-        user_serializer = UserSerializer(request.user, data=request.data, partial=True)
-        if user_serializer.is_valid():
-            user_serializer.save()
-            return JsonResponse({'Status': True})
-        else:
-            return JsonResponse({'Status': False, 'Errors': user_serializer.errors})
 
 
 class InitData(APIView):
@@ -192,6 +102,7 @@ class ProductInfoView(APIView):
     """
     Класс для поиска товаров
     """
+
     def get(self, request, *args, **kwargs):
 
         query = Q(shop__state=True)
@@ -215,88 +126,56 @@ class ProductInfoView(APIView):
         return Response(serializer.data)
 
 
-class BasketView(APIView):
+class BasketListView(generics.ListAPIView):
     """
-    Класс для работы с корзиной пользователя
+    GET (list basket)
     """
-    # получить корзину
-    def get(self, request, *args, **kwargs):
-        basket = Order.objects.filter(
-            user_id=request.user.id, state='basket').prefetch_related(
-            'ordered_items__product_info__product__category',
-            'ordered_items__product_info__product_parameters__parameter').annotate(
-            total_sum=Sum(F('ordered_items__quantity') * F('ordered_items__product_info__price'))).distinct()
+    permission_classes = (OnlyBuyers,)
+    serializer_class = BasketSerializer
 
-        serializer = OrderSerializer(basket, many=True)
-        return Response(serializer.data)
-
-    # редактировать корзину. Добавить в корзину(items [{"quantity":33, "product_info":12}])
-    def post(self, request, *args, **kwargs):
-        items_sting = request.data.get('items')
-        if items_sting:
-            try:
-                items_dict = load_json(items_sting)
-            except ValueError:
-                JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
-            else:
-                basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
-                objects_created = 0
-                for order_item in items_dict:
-                    order_item.update({'order': basket.id})
-                    serializer = OrderItemSerializer(data=order_item)
-                    if serializer.is_valid():
-                        try:
-                            serializer.save()
-                        except IntegrityError as error:
-                            return JsonResponse({'Status': False, 'Errors': str(error)})
-                        else:
-                            objects_created += 1
-
-                    else:
-                        return JsonResponse({'Status': False, 'Errors': serializer.errors})
-
-                return JsonResponse({'Status': True, 'Создано объектов': objects_created})
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    # удалить товары из корзины (form-data: items индексы в shop_orderitem через запятую)
-    def delete(self, request, *args, **kwargs):
-        items_sting = request.data.get('items')
-        if items_sting:
-            items_list = items_sting.split(',')
-            basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
-            query = Q()
-            objects_deleted = False
-            for order_item_id in items_list:
-                if order_item_id.isdigit():
-                    query = query | Q(order_id=basket.id, id=order_item_id)
-                    objects_deleted = True
-
-            if objects_deleted:
-                deleted_count = OrderItem.objects.filter(query).delete()[0]
-                return JsonResponse({'Status': True, 'Удалено объектов': deleted_count})
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    # добавить позиции в корзину (x-www-form-urlencoded items [{"quantity":44, "id":13}])
-    def put(self, request, *args, **kwargs):
-        items_sting = request.data.get('items')
-        if items_sting:
-            try:
-                items_dict = load_json(items_sting)
-            except ValueError:
-                return JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
-            else:
-                basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
-                objects_updated = 0
-                for order_item in items_dict:
-                    if type(order_item['id']) == int and type(order_item['quantity']) == int:
-                        objects_updated += OrderItem.objects.filter(order_id=basket.id, id=order_item['id']).update(
-                            quantity=order_item['quantity'])
-
-                return JsonResponse({'Status': True, 'Обновлено объектов': objects_updated})
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+    def get_queryset(self):
+        return Order.objects.filter(user_id=self.request.user.id, state='basket')
 
 
-class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, viewsets.mixins.ListModelMixin):
+class BasketViewSet(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin, viewsets.mixins.DestroyModelMixin,
+                    viewsets.mixins.UpdateModelMixin):
+    """
+    PATCH (update quantity), DELETE, POST (create new item)
+    """
+    permission_classes = (OnlyBuyers,)
+
+    def get_queryset(self):
+        basket_items = OrderItem.objects.filter(order=self.get_basket_id())
+        return basket_items
+
+    serializer_class = OrderItemSerializer
+
+    def get_basket_id(self):
+        basket, _ = Order.objects.get_or_create(user_id=self.request.user.id, state='basket')
+        return basket.id
+
+    # TODO: implement a ListSerializer for multiple orderItem creation and update
+    # TODO: constraint exception of DB
+    # ==django.db.utils.IntegrityError: UNIQUE    constraint    failed: shop_orderitem.order_id, shop_orderitem.product_info_id==
+    # где лучше всего отлавливать подобную ситуацию? Переопределить create или perform_create?
+
+    # request data example - {"quantity":77,"product_info":3}. POST
+    def create(self, request, *args, **kwargs):
+        # TODO: for future multiple object creation
+        # for r in request.data:
+        #     r.update({"order": self.get_basket_id()})
+        request.data.update({"order": self.get_basket_id()})
+        return super().create(request, *args, **kwargs)
+
+    # def create(self, request, *args, **kwargs):
+    #     try:
+    #         return super().create(self, request, *args, **kwargs)
+    #     except IntegrityError as ex:
+    #         print("---", ex)
+    #         return Response('failed')
+
+
+class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin, viewsets.mixins.UpdateModelMixin):
     queryset = Order.objects.all()
 
     def get_serializer_class(self):
@@ -304,10 +183,14 @@ class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.UpdateModelMixin, vi
             return OrderSerializerViewSetRead
         elif self.action == 'partial_update':
             return OrderSerializerViewSetWrite
+        # for API schema generator
+        else:
+            return OrderSerializerViewSetRead
 
+    serializer_class = OrderSerializerViewSetWrite
     permission_classes = [OrderPermission]
 
-    #TODO: PUT and PATCH in schema
+    # TODO: PUT and PATCH in schema
     # PATCH. разместить заказ из корзины (id = id заказа(in url) json - {"contact_id":1})
     # content-type = application/json
     def partial_update(self, request, *args, **kwargs):
@@ -374,7 +257,3 @@ class CeleryTaskView(APIView):
             response_data['results'] = task.get()
 
         return JsonResponse(response_data)
-
-
-class CustomObtainAuthToken(ObtainAuthToken):
-    throttle_classes = (throttling.AnonRateThrottle,)

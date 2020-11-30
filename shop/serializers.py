@@ -2,26 +2,9 @@ from django.db.models import QuerySet, F
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from shop.models import User, Category, Shop, ProductInfo, Product, ProductParameter, OrderItem, Order, Contact
-
-
-class ContactSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Contact
-        fields = ('id', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'user', 'phone')
-        read_only_fields = ('id',)
-        extra_kwargs = {
-            'user': {'write_only': True}
-        }
-
-
-class UserSerializer(serializers.ModelSerializer):
-    contacts = ContactSerializer(read_only=True, many=True)
-
-    class Meta:
-        model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'company', 'position', 'contacts')
-        read_only_fields = ('id',)
+from shop.models import Category, Shop, ProductInfo, Product, ProductParameter, OrderItem, Order
+from shop_user.models import Contact
+from shop_user.serializers import ContactSerializer
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -36,6 +19,13 @@ class ShopSerializer(serializers.ModelSerializer):
         model = Shop
         fields = ('id', 'name', 'state',)
         read_only_fields = ('id',)
+
+
+class ShopBasketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = ('id', 'name', )
+        read_only_fields = ('id', 'name' )
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -64,6 +54,17 @@ class ProductInfoSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class ProductInfoBasketSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    # product_parameters = ProductParameterSerializer(read_only=True, many=True)
+    shop = ShopBasketSerializer(read_only=True)
+
+    class Meta:
+        model = ProductInfo
+        fields = ('id', 'model', 'product', 'shop', 'price',)
+        read_only_fields = ('id', 'model', 'product', 'shop', 'price')
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
@@ -74,8 +75,13 @@ class OrderItemSerializer(serializers.ModelSerializer):
         }
 
 
+
 class OrderItemCreateSerializer(OrderItemSerializer):
     product_info = ProductInfoSerializer(read_only=True)
+
+
+class OrderItemBasketSerializer(OrderItemSerializer):
+    product_info = ProductInfoBasketSerializer(read_only=True)
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -87,6 +93,18 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'ordered_items', 'state', 'dt', 'total_sum', 'contact',)
+        read_only_fields = ('id',)
+
+
+class BasketSerializer(serializers.ModelSerializer):
+    ordered_items = OrderItemBasketSerializer(read_only=True, many=True)
+
+    total_sum2 = serializers.IntegerField()
+    contact = ContactSerializer(read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ('id', 'ordered_items', 'state', 'dt', 'total_sum2', 'contact',)
         read_only_fields = ('id',)
 
 

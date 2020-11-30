@@ -1,0 +1,46 @@
+[
+  {
+    "model": "shop_user.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$nhZ5cxxL7L3s$oPC4ipOsvEQAX5dHpvzcGbQaHiYEjbcdQ2luNGMeZgw=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "lab",
+      "last_name": "i",
+      "is_staff": false,
+      "date_joined": "2020-11-29T08:37:40.623Z",
+      "email": "Dima@mail.com",
+      "company": "mi",
+      "position": "non",
+      "is_active": true,
+      "type": "buyer",
+      "groups": [
+      ],
+      "user_permissions": [
+      ]
+    }
+  },
+  {
+    "model": "shop_user.user",
+    "pk": 13,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$lS4GAkNXkk1X$Vx+wT0Jw1ohAT/DaXOq2OYCqIB5jq+EhjW4Zu7HUkhk=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "lab",
+      "last_name": "i",
+      "is_staff": false,
+      "date_joined": "2020-11-29T12:55:20.329Z",
+      "email": "Shop1@mail.com",
+      "company": "mi",
+      "position": "non",
+      "is_active": true,
+      "type": "shop",
+      "groups": [
+      ],
+      "user_permissions": [
+      ]
+    }
+  }
+]

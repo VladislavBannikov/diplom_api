@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'shop',
+    'shop_user',
 ]
 
 MIDDLEWARE = [
@@ -123,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'shop.User'
+AUTH_USER_MODEL = 'shop_user.User'
 
 # django.core.mail.backends.console.EmailBackend doesn't work with Celery task
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
@@ -143,7 +144,7 @@ REST_FRAMEWORK = {
       'rest_framework.permissions.IsAuthenticated'
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    'DEFAULT_AUTHENTICATION_CLASSES': ['shop.authentication.BearerTokenAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': ['shop_user.authentication.BearerTokenAuthentication',
                                        # 'rest_framework.authentication.BasicAuthentication'
                                        ],
     'DEFAULT_THROTTLE_CLASSES': [

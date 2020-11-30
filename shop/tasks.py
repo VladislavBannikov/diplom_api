@@ -1,9 +1,11 @@
 from celery import shared_task
 from django.http import JsonResponse
 
-from shop.models import User, ConfirmEmailToken
+from shop.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+
+from shop_user.models import ConfirmEmailToken
 
 
 @shared_task

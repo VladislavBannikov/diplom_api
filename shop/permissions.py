@@ -17,3 +17,19 @@ class OrderPermission(permissions.BasePermission):
             return obj.user_id == request.user.id
         else:
             return False
+
+
+class OnlyBuyers(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.type == 'buyer':
+            return True
+        else:
+            return False
+
+
+class OnlyShops(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.type == 'shop':
+            return True
+        else:
+            return False

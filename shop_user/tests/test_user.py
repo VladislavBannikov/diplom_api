@@ -1,8 +1,13 @@
 import json
+import unittest
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from shop.models import User
+from shop_user.models import User
+
+TEST_EMAIL = "Shop1@mail.com"
+TEST_PASSWORD = "123456Qw!"
 
 
 class TestAccountCreateUser(APITestCase):
@@ -16,13 +21,13 @@ class TestAccountCreateUser(APITestCase):
                        }
 
     def test_create_user(self):
-        url = reverse('user-list')
+        url = reverse('user:user-list')
         response = self.client.post(path=url, data=self.user_data_local)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class TestAccount(APITestCase):
-    fixtures = ['shop_dump.json', ]
+    fixtures = ['user.json', ]
 
     def test_account_detail(self):
         # Этот способ не работает. Возвращает True, но заголовка authorization нет в запросе (проверено
@@ -37,24 +42,28 @@ class TestAccount(APITestCase):
 
         # Этот способ найден здесь:
         # https://stackoverflow.com/questions/37513050/django-apiclient-login-not-working
-        self.client.force_authenticate(User.objects.get(email='Dima@mail.com'))
-        url = reverse('user-detail')
+        self.client.force_authenticate(User.objects.get(email=TEST_EMAIL))
+        url = reverse('user:user-detail')
         response = self.client.get(path=url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_token(self):
-        url = reverse('api_token_auth')
-        data = {"username": "Dima@mail.com",
-                "password": "123456Qw!"
+        url = reverse('user:api_token_auth')
+        data = {"username": TEST_EMAIL,
+                "password": TEST_PASSWORD
                 }
         response = self.client.post(path=url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("token", json.loads(response.content))
 
     def test_account_edit(self):
-        data = {"first_name": "test_name"}
-        self.client.force_authenticate(User.objects.get(email='Dima@mail.com'))
-        url = reverse('user-edit')
+        new_name = "test_name"
+        data = {"first_name": new_name}
+        self.client.force_authenticate(User.objects.get(email=TEST_EMAIL))
+        url = reverse('user:user-edit')
         response = self.client.post(path=url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(User.objects.get(email='Dima@mail.com').first_name, data.get("first_name"))
+        self.assertEqual(User.objects.get(email=TEST_EMAIL).first_name, new_name)
+
+
+

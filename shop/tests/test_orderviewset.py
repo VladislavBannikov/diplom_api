@@ -1,16 +1,12 @@
 import unittest
 from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APITestCase, URLPatternsTestCase
-# from myproject.apps.core.models import Account
-# from diplom_api import settings
-from shop.models import User
-
+from shop_user.models import User
 
 @unittest.skip
 class TestOrderViewSet(APITestCase):
     def test_order_listing(self):
-        url = reverse('order-list')
+        url = reverse('shop:order-list')
         print("TestOrderViewSet-----", User.objects.all())
 
         print(self.client.login(username='Senya@mail.com', password='123456Qw!'))
@@ -34,6 +30,3 @@ class TestOrderViewSet(APITestCase):
 #         self.assertEqual(Account.objects.count(), 1)
 #         self.assertEqual(Account.objects.get().name, 'DabApps')
 
-
-if __name__ == '__main__':
-    unittest.main()
