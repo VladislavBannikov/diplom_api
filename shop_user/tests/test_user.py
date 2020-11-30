@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from shop_user.models import User
 
-TEST_EMAIL = "Shop1@mail.com"
+TEST_USER = "Shop1@mail.com"
 TEST_PASSWORD = "123456Qw!"
 
 
@@ -42,14 +42,14 @@ class TestAccount(APITestCase):
 
         # Этот способ найден здесь:
         # https://stackoverflow.com/questions/37513050/django-apiclient-login-not-working
-        self.client.force_authenticate(User.objects.get(email=TEST_EMAIL))
+        self.client.force_authenticate(User.objects.get(email=TEST_USER))
         url = reverse('user:user-detail')
         response = self.client.get(path=url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_token(self):
         url = reverse('user:api_token_auth')
-        data = {"username": TEST_EMAIL,
+        data = {"username": TEST_USER,
                 "password": TEST_PASSWORD
                 }
         response = self.client.post(path=url, data=data)
@@ -59,11 +59,11 @@ class TestAccount(APITestCase):
     def test_account_edit(self):
         new_name = "test_name"
         data = {"first_name": new_name}
-        self.client.force_authenticate(User.objects.get(email=TEST_EMAIL))
+        self.client.force_authenticate(User.objects.get(email=TEST_USER))
         url = reverse('user:user-edit')
         response = self.client.post(path=url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(User.objects.get(email=TEST_EMAIL).first_name, new_name)
+        self.assertEqual(User.objects.get(email=TEST_USER).first_name, new_name)
 
 
 

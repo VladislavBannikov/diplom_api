@@ -1104,6 +1104,25 @@
     }
   },
   {
+    "model": "shop.order",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "dt": "2020-11-30T19:27:30.936Z",
+      "state": "basket",
+      "contact": null
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 12,
+    "fields": {
+      "order": 4,
+      "product_info": 3,
+      "quantity": 5
+    }
+  },
+  {
     "model": "shop_user.user",
     "pk": 1,
     "fields": {
@@ -1191,20 +1210,6 @@
   },
   {
     "model": "shop_user.contact",
-    "pk": 3,
-    "fields": {
-      "user": 1,
-      "city": "Moscow",
-      "street": "Petrovka",
-      "house": "",
-      "structure": "",
-      "building": "",
-      "apartment": "",
-      "phone": "+7000002"
-    }
-  },
-  {
-    "model": "shop_user.contact",
     "pk": 4,
     "fields": {
       "user": 1,
@@ -1231,4 +1236,4 @@
       "phone": "+7000002"
     }
   }
-]
+]"street": "Solyanka12", "house": "", "structure": "", "building": "", "apartment": "", "phone": "+7000002"}}]

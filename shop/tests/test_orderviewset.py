@@ -5,6 +5,7 @@ from shop_user.models import User
 
 @unittest.skip
 class TestOrderViewSet(APITestCase):
+
     def test_order_listing(self):
         url = reverse('shop:order-list')
         print("TestOrderViewSet-----", User.objects.all())

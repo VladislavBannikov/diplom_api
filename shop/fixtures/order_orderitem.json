@@ -1,0 +1,21 @@
+[
+{
+    "model": "shop.order",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "dt": "2020-11-30T19:27:30.936Z",
+      "state": "basket",
+      "contact": null
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 12,
+    "fields": {
+      "order": 4,
+      "product_info": 3,
+      "quantity": 5
+    }
+  }
+]
