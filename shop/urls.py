@@ -6,8 +6,6 @@ from rest_framework import routers
 from shop.views import PartnerUpdate, InitData, \
     ProductInfoView, SingleProductInfoView, PartnerOrders, OrderBuyerViewSet, BasketListView, BasketViewSet
 
-# , BasketView
-
 app_name = 'shop'
 
 router = routers.SimpleRouter()
@@ -19,7 +17,6 @@ urlpatterns = [
     path('initdata/', InitData.as_view(), name='init-data'),
     path('products/', ProductInfoView.as_view(), name='shops'),
     path('singleproduct/', SingleProductInfoView.as_view(), name='prod'),
-    # path('basket/', BasketView.as_view(), name='basket'),
     path('basketlist/', BasketListView.as_view(), name='basket-list-apiview'),
 
     path('partner/orders/', PartnerOrders.as_view(), name='partner-orders'),

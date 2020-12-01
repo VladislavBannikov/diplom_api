@@ -28,9 +28,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from shop.models import Shop, Category, Product, ProductInfo, ProductParameter, Parameter, Order, OrderItem
-from shop.serializers import ProductInfoSerializer, ProductSerializer, SingleProductSerializer, \
+from shop.serializers import ProductInfoSerializer, SingleProductSerializer, \
     OrderItemSerializer, OrderSerializer, OrderSerializerViewSetWrite, OrderSerializerViewSetRead, \
-    BasketSerializer, OrderItemCreateSerializer
+    BasketSerializer
 from shop.tasks import new_order_task, new_user_registered_task
 
 
