@@ -1109,6 +1109,26 @@
     "fields": {
       "user": 1,
       "dt": "2020-11-30T19:27:30.936Z",
+      "state": "new",
+      "contact": 2
+    }
+  },
+  {
+    "model": "shop.order",
+    "pk": 6,
+    "fields": {
+      "user": 1,
+      "dt": "2020-12-01T20:36:48.461Z",
+      "state": "new",
+      "contact": 2
+    }
+  },
+  {
+    "model": "shop.order",
+    "pk": 7,
+    "fields": {
+      "user": 1,
+      "dt": "2020-12-01T20:49:45.946Z",
       "state": "basket",
       "contact": null
     }
@@ -1120,6 +1140,33 @@
       "order": 4,
       "product_info": 3,
       "quantity": 5
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 15,
+    "fields": {
+      "order": 4,
+      "product_info": 2,
+      "quantity": 7
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 16,
+    "fields": {
+      "order": 6,
+      "product_info": 2,
+      "quantity": 7
+    }
+  },
+  {
+    "model": "shop.orderitem",
+    "pk": 17,
+    "fields": {
+      "order": 7,
+      "product_info": 2,
+      "quantity": 7
     }
   },
   {
@@ -1236,4 +1283,4 @@
       "phone": "+7000002"
     }
   }
-]"street": "Solyanka12", "house": "", "structure": "", "building": "", "apartment": "", "phone": "+7000002"}}]
+]

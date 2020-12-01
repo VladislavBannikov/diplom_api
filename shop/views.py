@@ -15,6 +15,7 @@ from json import loads as load_json
 
 from rest_framework.decorators import action
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.exceptions import APIException
 
 from .permissions import OrderPermission, OnlyBuyers
 
@@ -175,38 +176,33 @@ class BasketViewSet(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin, v
     #         return Response('failed')
 
 
-class OrderViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin, viewsets.mixins.UpdateModelMixin):
-    queryset = Order.objects.all()
+class OrderBuyerViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin):
+    """
+    create (POST) - place order. Contact_id  is required
+    list (GET) - get buyer's orders
+    """
+    permission_classes = (OnlyBuyers,)
+    queryset = Order.objects.all().exclude(state='basket')
+    serializer_class = OrderSerializerViewSetRead
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return OrderSerializerViewSetRead
-        elif self.action == 'partial_update':
-            return OrderSerializerViewSetWrite
-        # for API schema generator
+    def get_basket(self):
+        basket, _ = Order.objects.get_or_create(user_id=self.request.user.id, state='basket')
+        return basket
+
+    def create(self, request):
+        """
+        Place an order (goods from a basket)
+        POST with contact_id parameter
+        """
+        basket = self.get_basket()
+        self.request.data.update({"state": "new"})
+        serializer = OrderSerializerViewSetWrite(instance=basket, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
         else:
-            return OrderSerializerViewSetRead
+            return Response(serializer.errors)
 
-    serializer_class = OrderSerializerViewSetWrite
-    permission_classes = [OrderPermission]
-
-    # TODO: PUT and PATCH in schema
-    # PATCH. разместить заказ из корзины (id = id заказа(in url) json - {"contact_id":1})
-    # content-type = application/json
-    def partial_update(self, request, *args, **kwargs):
-        if {'contact_id'}.issubset(request.data):
-            request.data.update({"state": "new"})
-            response = viewsets.mixins.UpdateModelMixin.partial_update(self, request, *args, **kwargs)
-            ### calary task
-            # new_order_task.delay(request.user.id)
-            return response
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    # GET. получить мои заказы
-    # Use additional filter for queryset
-    def list(self, request, *args, **kwargs):
-        self.queryset = self.get_queryset().exclude(state='basket')
-        return viewsets.mixins.ListModelMixin.list(self, request, *args, **kwargs)
 
 
 class PartnerOrders(APIView):

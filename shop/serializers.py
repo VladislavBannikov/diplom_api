@@ -24,8 +24,8 @@ class ShopSerializer(serializers.ModelSerializer):
 class ShopBasketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ('id', 'name', )
-        read_only_fields = ('id', 'name' )
+        fields = ('id', 'name',)
+        read_only_fields = ('id', 'name')
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -73,7 +73,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'order': {'write_only': True}
         }
-
 
 
 class OrderItemCreateSerializer(OrderItemSerializer):
@@ -146,9 +145,18 @@ class OrderSerializerViewSetWrite(OrderSerializerViewSetRead):
         fields = ('id', 'state', 'dt', 'ordered_items', 'contact_id', 'contact', 'total_sum2')
 
     def validate(self, data):
-        new_contact = Contact.objects.get(id=data['contact_id'])
+        # contact_id = data.get('contact_id')
+        try:
+            new_contact = Contact.objects.get(id=data.get('contact_id'))
+        except Exception as e:
+            raise serializers.ValidationError(f"contact_id required in request - {e}")
+
         if new_contact.user_id != self.instance.user_id:
             raise serializers.ValidationError("Order contact should belong to the user who created the order")
+
+        if not self.instance.ordered_items.count():
+            raise serializers.ValidationError("Basket is empty")
+
         return data
 
 

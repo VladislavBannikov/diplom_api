@@ -8,7 +8,7 @@ TEST_ORDER_ITEM_ID = 12
 
 
 class TestBasket(APITestCase):
-    fixtures = ['user.json', 'shop_product_productinfo_productparameter.json', 'order_orderitem.json']
+    fixtures = ['user.json', 'shop_product_productinfo_productparameter.json', 'order_orderitem_basket.json']
 
     def test_basket_list(self):
         url = reverse('shop:basket-list-apiview')
@@ -32,7 +32,7 @@ class TestBasket(APITestCase):
         response = self.client.delete(path=url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_basket_add(self):
+    def test_basket_update(self):
         url = reverse('shop:basket-detail', args=[TEST_ORDER_ITEM_ID])
         data = {
             "quantity": 111,

@@ -1,0 +1,30 @@
+[
+  {
+    "model": "shop_user.contact",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "city": "Moscow",
+      "street": "Petrovka",
+      "house": "",
+      "structure": "",
+      "building": "",
+      "apartment": "",
+      "phone": "+7000001"
+    }
+  },
+  {
+    "model": "shop_user.contact",
+    "pk": 7,
+    "fields": {
+      "user": 13,
+      "city": "Moscow",
+      "street": "Solyanka12",
+      "house": "",
+      "structure": "",
+      "building": "",
+      "apartment": "",
+      "phone": "+7000002"
+    }
+  }
+]

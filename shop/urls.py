@@ -4,14 +4,14 @@ from django.urls import path
 from rest_framework import routers
 
 from shop.views import PartnerUpdate, InitData, \
-    ProductInfoView, SingleProductInfoView, PartnerOrders, OrderViewSet, BasketListView, BasketViewSet
+    ProductInfoView, SingleProductInfoView, PartnerOrders, OrderBuyerViewSet, BasketListView, BasketViewSet
 
 # , BasketView
 
 app_name = 'shop'
 
 router = routers.SimpleRouter()
-router.register(r'order', OrderViewSet)
+router.register(r'orderbuyer', OrderBuyerViewSet, basename="orderbuyer")
 router.register(r'basket', BasketViewSet, basename="basket")
 
 urlpatterns = [
